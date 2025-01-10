@@ -1,0 +1,394 @@
+:root{
+    --btn-success: #0DC143;  
+    --white: #FFFFFF;
+    --muted: #A1B0BF;
+    --dark:#111111;
+    --muted-x: #696969;
+    --marca:#ff6079;
+    --marca-x:#fe3051;
+    --bg:#cdcdcd;
+}
+
+.navbar-dark{background-color: var(--marca) !important;}
+
+.btn-marca{
+    background-color: var(--marca);
+}
+
+.btn-success{background-color: var(--btn-success)!important;}
+
+.card {
+    padding: 10px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.28); /* Sombra sutil */
+    display: inline-block; /* Ajusta la tarjeta al tamaño del contenido */
+    width: auto; /* Permite que la tarjeta se ajuste a la imagen */
+    border-radius: 8px; /* Opcional: para un diseño más estilizado */
+    border: 1px solid rgba(0, 0, 0, 0.3); /* Borde ligeramente más oscuro */
+}
+
+.card img {
+    cursor: pointer;
+}
+
+.btn-xlg {
+    padding: 0.2rem 1rem; /* Ajusta el padding según sea necesario */
+    border-radius: 0.3rem; /* Ajusta el radio de borde si es necesario */
+}
+
+.icon-large{
+    font-size: 1.8rem;
+}
+
+.img-gallery{
+    width: 100%;
+    height: auto;              /* Mantener la relación de aspecto */
+    max-width: 300px;         /* Limitar la altura máxima a 500px */
+    object-fit: cover; /* Mantiene la proporción de la imagen, recortando si es necesario */
+    object-position: center; /* Centra la imagen dentro del contenedor */
+}
+
+/* Estilos base para el carrusel */
+.img-carrusel {
+    width: 100%;               /* Ocupar el 100% del ancho del contenedor */
+    height: auto;              /* Mantener la relación de aspecto */
+    max-height: 500px;         /* Limitar la altura máxima a 500px */
+    object-fit: contain;       /* Ajustar la imagen sin recortar */
+    object-position: center;   /* Centrar la imagen */
+}
+
+.img-testimonio{
+    width:115px;
+    height:115px;
+}
+
+.carousel {
+    max-width: 700px;         /* Limitar el ancho máximo a 1500px */
+    width: 100%;               /* Hacer que ocupe el 100% del ancho del contenedor */
+    margin: 0 auto;            /* Centrar el carrusel horizontalmente */
+    overflow: hidden;          /* Ocultar el contenido que se desborde */
+}
+
+.carousel-item {
+    height: auto;              /* Permitir que los elementos del carrusel se ajusten automáticamente */
+    text-align: center;
+}
+
+.images img{
+    transition-property: transform;
+    transition-duration:.3s;
+}
+
+.images img:hover{transform: scale(1.04);}
+
+.carousel-inner {
+    justify-content: center;
+    align-items: center;
+}
+
+/* Estilos específicos solo para #hero1 */
+#hero1 .carousel-indicators {
+    position: absolute;
+    bottom: 60px; /* Ajusta la distancia de los indicadores desde la parte inferior del carrusel */
+    left: 35%;
+    transform: translateX(-50%);
+    z-index: 2;
+}
+
+#hero2 .carousel-indicators {
+    position: absolute;
+    bottom: 60px; /* Ajusta la distancia de los indicadores desde la parte inferior del carrusel */
+    left: 35%;
+    transform: translateX(-50%);
+    z-index: 2;
+}
+
+#hero1 .carousel-inner {
+    position: relative;
+}
+
+#hero2 .carousel-inner {
+    position: relative;
+}
+
+#hero1 .buttons-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+#hero2 .buttons-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+#hero1 .buttons-container button {
+    margin: 0 0.5rem;
+}
+
+#hero1 .buttons-container button {
+    margin: 0 0.5rem;
+}
+
+
+/* Media query para dispositivos pequeños (menos de 576px de ancho) */
+@media (max-width: 576px) {
+    .buttons-container {
+        flex-direction: column; /* Cambia a una disposición vertical en pantallas pequeñas */
+        align-items: center; /* Centra los botones en dispositivos pequeños */
+    }
+
+    #hero1 .buttons-container button {
+        margin: 0.25rem 0; /* Ajustar el margen vertical */
+    }
+
+    .buttons-container button {
+        width: 100%; /* Hacer que los botones ocupen el 100% del ancho disponible */
+        max-width: 300px; /* Ancho máximo para evitar que se estiren demasiado */
+        margin: 0.25rem 0; /* Ajustar el margen vertical */
+    }
+
+    #hero2 .carousel-indicators {
+        position: absolute;
+        top: 300px; /* Ajusta la distancia de los indicadores desde la parte inferior del carrusel */
+        left: 35%;
+        transform: translateX(-50%);
+        z-index: 2;
+    }
+
+    #hero1 .carousel-indicators {
+        position: absolute;
+        top: 295px; /* Ajusta la distancia de los indicadores desde la parte inferior del carrusel */
+        left: 35%;
+        transform: translateX(-50%);
+        z-index: 2;
+    }
+}
+
+
+.text-informativo{
+    font-size:40px;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 50px;
+    margin-left: 50px;
+}
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.text-dashboard{
+    color: var(--white);
+    font-size: x-large;
+}
+
+.th-tabla{
+    font-size: 18px;
+}
+
+.td-tabla{
+    font-size:18px;
+}
+
+
+/* Media Queries para pantallas pequeñas y medianas */
+
+/* Estilos para dispositivos de pantallas pequeñas (hasta 600px) */
+@media (max-width: 600px) {
+    .img-carrusel {
+        max-height: 300px;     /* Reducir la altura máxima en pantallas pequeñas */
+    }
+    
+    .carousel-item {
+        height: auto;          /* Ajustar la altura automáticamente */
+    }
+    
+    /* Ajustes para texto en pantallas pequeñas */
+    h1 {
+        font-size: 24px;       /* Reducir el tamaño del texto principal */
+    }
+
+    p {
+        font-size: 14px;       /* Reducir el tamaño del texto secundario */
+    }
+}
+
+/* Estilos para pantallas medianas (hasta 992px) */
+@media (max-width: 992px) {
+    .img-carrusel {
+        max-height: 400px;     /* Ajustar la altura para pantallas medianas */
+    }
+    
+    .carousel-item {
+        height: auto;
+    }
+    
+    /* Ajustes para texto en pantallas medianas */
+    h1 {
+        font-size: 28px;       /* Ajustar el tamaño del texto principal */
+    }
+
+    p {
+        font-size: 16px;       /* Ajustar el tamaño del texto secundario */
+    }
+}
+
+/* Estilos para pantallas grandes (más de 992px) */
+@media (min-width: 992px) {
+    .img-carrusel {
+        max-height: 500px;     /* Mantener la altura de 500px en pantallas grandes */
+    }
+
+    /* Ajustes para texto en pantallas grandes */
+    h1 {
+        font-size: 32px;       /* Tamaño del texto principal para pantallas grandes */
+    }
+
+    p {
+        font-size: 18px;       /* Tamaño del texto secundario para pantallas grandes */
+    }
+}
+
+
+/* Cambiar el color de las flechas de navegación a negro */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: black; /* Cambia el fondo de los iconos a negro */
+    border-radius: 50%;      /* Hace que el fondo tenga bordes redondeados */
+}
+
+.carousel-control-deco {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.carousel-deco-icon {
+    width: 40px;
+    height: 40px;
+    background-color: #d3d3d3; /* Fondo gris */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position: relative;
+}
+
+.carousel-control-deco {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.carousel-deco-icon {
+    width: 40px;
+    height: 40px;
+    background-color: #d3d3d3; /* Fondo gris */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.carousel-deco-icon:hover {
+    background-color: black;
+}
+
+.prev::before {
+    content: '\f104'; /* Código de Font Awesome para flecha izquierda */
+    font-family: 'Font Awesome 5 Free'; 
+    font-weight: 900; /* Ajusta el grosor de la flecha */
+    font-size: 18px;
+    color: white;
+}
+
+.next::before {
+    content: '\f105'; /* Código de Font Awesome para flecha derecha */
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900; /* Ajusta el grosor de la flecha */
+    font-size: 18px;
+    color: white;
+}
+
+.modal-gallery {
+    display: flex;            /* Usamos Flexbox para centrar la imagen */
+    justify-content: center;   /* Centrar horizontalmente */
+    align-items: center;       /* Centrar verticalmente */
+    overflow: hidden;          /* Ocultar cualquier contenido que sobresalga */
+    height: auto;              /* Mantener el contenedor adaptable a la altura */
+}
+
+.modal-body {
+    padding: 0;                /* Eliminar padding para maximizar el espacio */
+}
+
+.modal-gallery img {
+    width: 100%;               /* La imagen ocupará todo el ancho disponible */
+    height: auto;              /* Mantener la relación de aspecto */
+    max-height: 500px;         /* Limitar la altura máxima */
+    object-fit: contain;       /* Evita el recorte de la imagen */
+    object-position: center;   /* Centrar la imagen dentro de su contenedor */
+}
+
+.modal-dialog {
+    width: 100%;               /* Ocupa todo el ancho disponible */
+    height: 100%;
+    max-width: 500px;          /* Fijar un ancho máximo al modal */
+    max-height: 500px;
+    margin: auto;              /* Centrar el modal en la pantalla */
+}
+
+.modal-content {
+    background-color: transparent; /* Si no deseas bordes ni fondo detrás de la imagen */
+    border: none;              /* Eliminar los bordes del modal */
+}
+
+.servicio{
+    width: 130px;
+    height: 130px;
+}
+
+#main {
+    transition: margin-left .5s;
+    padding: 16px;
+}
+
+.bg-primary{background: var(--marca) !important;}
+
+.btn-info{
+    background-color: var(--marca)!important;
+    color: var(--dark);
+}
+
