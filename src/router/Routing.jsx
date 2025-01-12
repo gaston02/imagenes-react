@@ -4,6 +4,7 @@ import { PublicLayout } from "../components/layout/public/PublicLayout";
 import { Login } from "../components/user/Login";
 import { Register } from "../components/user/Register";
 import { Perfil } from "../components/user/Perfil";
+import Carousel from "../components/Carousel";
 
 export const Routing = () => {
   return (
@@ -11,6 +12,7 @@ export const Routing = () => {
       <AuthProvider>
         <Routes>
           <Route path="/" element={<PublicLayout />}>
+            <Route index element={<Carousel />} /> 
             <Route path="login" element={<Login />} />
             <Route path="registro" element={<Register />} />
             <Route path="perfil" element={<Perfil />} />
