@@ -1,31 +1,10 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { Global, Upload } from "../util/Global";
+import PropTypes from "prop-types";
+import { Upload } from "../util/Global";
+import { useState } from "react";
 
-const Carousel = () => {
-  const [galleries, setGalleries] = useState([]);
-  const [userName, setUserName] = useState("");
+const Carousel = ({ galleries, userName }) => {
   const [currentGalleryIndex] = useState(0);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const axiosRandomUser = async () => {
-      try {
-        const response = await axios.get(Global.URL + "usuario/aleatorio");
-        const data = response.data.data;
-        setGalleries(data.galleries || []); // Asegurarse de que galleries sea un arreglo vacío si no existe
-        setUserName(data.nameUser || "Desconocido"); // Default si no hay nombre de usuario
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    axiosRandomUser();
-  }, []);
 
   const handleNextImage = () => {
     const images = galleries[currentGalleryIndex]?.images || [];
@@ -40,14 +19,6 @@ const Carousel = () => {
       prevIndex > 0 ? prevIndex - 1 : images.length - 1
     );
   };
-
-  if (loading) {
-    return <div>Cargando...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
 
   if (galleries.length === 0) {
     return (
@@ -98,9 +69,7 @@ const Carousel = () => {
 
       {/* Mostrar los indicadores solo si hay más de una imagen */}
       {currentGallery?.images?.length > 1 && (
-        <div className="carousel-indicators">
-          {indicators}
-        </div>
+        <div className="carousel-indicators">{indicators}</div>
       )}
 
       <button
@@ -121,6 +90,11 @@ const Carousel = () => {
       </button>
     </main>
   );
+};
+
+Carousel.propTypes = {
+  galleries: PropTypes.array.isRequired,
+  userName: PropTypes.string.isRequired,
 };
 
 export default Carousel;

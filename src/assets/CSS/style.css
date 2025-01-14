@@ -12,18 +12,18 @@
 .navbar-dark{background-color: var(--marca) !important;}
 
 .btn-marca{
-    background-color: var(--marca);
+    background-color: var(--marca) !important;
 }
 
 .btn-success{background-color: var(--btn-success)!important;}
 
 .card {
-    padding: 10px;
-    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.28); /* Sombra sutil */
-    display: inline-block; /* Ajusta la tarjeta al tamaño del contenido */
-    width: auto; /* Permite que la tarjeta se ajuste a la imagen */
-    border-radius: 8px; /* Opcional: para un diseño más estilizado */
-    border: 1px solid rgba(0, 0, 0, 0.3); /* Borde ligeramente más oscuro */
+    padding: 10px !important;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.28) !important; /* Sombra sutil */
+    display: inline-block !important; /* Ajusta la tarjeta al tamaño del contenido */
+    width: auto !important; /* Permite que la tarjeta se ajuste a la imagen */
+    border-radius: 8px !important; /* Opcional: para un diseño más estilizado */
+    border: 1px solid rgba(0, 0, 0, 0.3) !important; /* Borde ligeramente más oscuro */
 }
 
 .card img {
@@ -40,11 +40,11 @@
 }
 
 .img-gallery{
-    width: 100%;
-    height: auto;              /* Mantener la relación de aspecto */
-    max-width: 300px;         /* Limitar la altura máxima a 500px */
-    object-fit: cover; /* Mantiene la proporción de la imagen, recortando si es necesario */
-    object-position: center; /* Centra la imagen dentro del contenedor */
+    width: 100% !important;
+    height: auto !important;              /* Mantener la relación de aspecto */
+    max-width: 300px !important;         /* Limitar la altura máxima a 500px */
+    object-fit: cover !important; /* Mantiene la proporción de la imagen, recortando si es necesario */
+    object-position: center !important; /* Centra la imagen dentro del contenedor */
 }
 
 /* Estilos base para el carrusel */
@@ -216,8 +216,25 @@
     font-size:18px;
 }
 
+@media (max-width: 3000px) {
+  
+    .modal-content {
+      max-width: 350px !important; /* Asegura que el modal no se estire más allá del 100% */
+      margin: 0 !important; /* Elimina márgenes para ajustar mejor el contenido */
+    }
 
-/* Media Queries para pantallas pequeñas y medianas */
+    .btn-close {
+        font-size: 1.5rem !important;  /* Reducir el tamaño del icono en pantallas pequeñas */
+        padding: 0.5rem !important;    /* Asegurarse de que el padding sea adecuado */
+        width: 25px !important;        /* Establecer un tamaño fijo para el botón */
+        height: 25px !important;       /* Establecer un tamaño fijo para el botón */
+        top: 5px !important;           /* Ajuste el espacio desde el borde superior */
+        right: 5px !important;         /* Ajuste el espacio desde el borde derecho */
+        z-index: 1050 !important;      /* Asegurarse de que esté sobre otros elementos */
+    }
+
+  }
+  
 
 /* Estilos para dispositivos de pantallas pequeñas (hasta 600px) */
 @media (max-width: 600px) {
@@ -343,11 +360,12 @@
 }
 
 .modal-gallery {
-    display: flex;            /* Usamos Flexbox para centrar la imagen */
-    justify-content: center;   /* Centrar horizontalmente */
-    align-items: center;       /* Centrar verticalmente */
-    overflow: hidden;          /* Ocultar cualquier contenido que sobresalga */
-    height: auto;              /* Mantener el contenedor adaptable a la altura */
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    overflow: hidden !important;
+    width: 100% !important;
+    height: auto !important;
 }
 
 .modal-body {
@@ -391,4 +409,4 @@
     background-color: var(--marca)!important;
     color: var(--dark);
 }
-
+  
