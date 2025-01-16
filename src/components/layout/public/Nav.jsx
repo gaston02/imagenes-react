@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
+import useAuth from "../../../hooks/useAuth"; // Importa el hook
 
 export const Nav = () => {
+  const { auth, logout } = useAuth(); // Usamos el hook para obtener auth y logout
+  console.log("autenticado: ", auth);
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark sticky-top">
       <div className="container d-flex">
@@ -29,11 +33,24 @@ export const Nav = () => {
                 Inicio
               </Link>
             </li>
-            <li className="nav-item mb-2 mb-lg-0">
-              <Link className="nav-link text-white fw-bold me-3" to="/login">
-                Login
-              </Link>
-            </li>
+            {!auth?._id ? ( // Usamos el operador de encadenamiento opcional
+              <>
+                <Link className="nav-link text-white fw-bold me-3" to="login">
+                  Login
+                </Link>
+                <Link
+                  className="nav-link text-white fw-bold me-3"
+                  to="/registro"
+                >
+                  Registro
+                </Link>
+              </>
+            ) : (
+              // Si hay un ID de usuario (es decir, el usuario está logueado), mostramos Logout
+              <button className="nav-link text-white fw-bold me-3" onClick={logout}>
+                Logout
+              </button>
+            )}
             <li className="nav-item mb-2 mb-lg-0">
               <Link className="nav-link text-white fw-bold me-3" to="#imagenes">
                 Imagenes

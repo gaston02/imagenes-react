@@ -5,6 +5,7 @@ import { Login } from "../components/user/Login";
 import { Register } from "../components/user/Register";
 import { Perfil } from "../components/user/Perfil";
 import RandomUserGallery from "../components/GalleryPage";
+import { Prueba } from "../components/Prueba";
 
 export const Routing = () => {
   return (
@@ -13,6 +14,7 @@ export const Routing = () => {
         <Routes>
           <Route path="/" element={<PublicLayout />}>
             <Route index element={<RandomUserGallery />} />
+            <Route path="loginprueba" element={<Prueba />} />
             <Route path="login" element={<Login />} />
             <Route path="registro" element={<Register />} />
             <Route path="perfil" element={<Perfil />} />
