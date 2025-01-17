@@ -47,9 +47,9 @@ export const Nav = () => {
               </>
             ) : (
               // Si hay un ID de usuario (es decir, el usuario está logueado), mostramos Logout
-              <button className="nav-link text-white fw-bold me-3" onClick={logout}>
+              <Link className="nav-link text-white fw-bold me-3" onClick={logout}>
                 Logout
-              </button>
+              </Link>
             )}
             <li className="nav-item mb-2 mb-lg-0">
               <Link className="nav-link text-white fw-bold me-3" to="#imagenes">

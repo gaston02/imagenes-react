@@ -15,7 +15,7 @@ export const PrivateLayout = () => {
       Cookies.remove('user');   // Elimina la cookie del usuario
       navigate('/');
     }
-  }, [auth, loading, navigate]);
+  }, [auth, loading]);
 
   if (loading) return <div>Loading...</div>; // Muestra un loading mientras se verifica la autenticación
   return (

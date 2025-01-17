@@ -18,9 +18,11 @@ export const Routing = () => {
             <Route path="registro" element={<Register />} />
             <Route path="perfil" element={<Perfil />} />
           </Route>
-          <Route path="/auth" element={<PrivateLayout />} />
-          <Route index element={<RandomUserGallery />} />
-          <Route path="perfil" element={<Perfil />} />
+
+          <Route path="/auth" element={<PrivateLayout />}>
+            <Route index element={<RandomUserGallery />} />
+            <Route path="perfil" element={<Perfil />} />
+          </Route>
         </Routes>
       </AuthProvider>
     </BrowserRouter>
