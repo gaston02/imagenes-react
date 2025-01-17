@@ -5,7 +5,7 @@ import { Login } from "../components/user/Login";
 import { Register } from "../components/user/Register";
 import { Perfil } from "../components/user/Perfil";
 import RandomUserGallery from "../components/GalleryPage";
-import { Prueba } from "../components/Prueba";
+import { PrivateLayout } from "../components/layout/private/PrivateLayout";
 
 export const Routing = () => {
   return (
@@ -14,11 +14,13 @@ export const Routing = () => {
         <Routes>
           <Route path="/" element={<PublicLayout />}>
             <Route index element={<RandomUserGallery />} />
-            <Route path="loginprueba" element={<Prueba />} />
             <Route path="login" element={<Login />} />
             <Route path="registro" element={<Register />} />
             <Route path="perfil" element={<Perfil />} />
           </Route>
+          <Route path="/auth" element={<PrivateLayout />} />
+          <Route index element={<RandomUserGallery />} />
+          <Route path="perfil" element={<Perfil />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

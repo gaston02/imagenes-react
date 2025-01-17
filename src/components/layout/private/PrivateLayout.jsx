@@ -1,12 +1,10 @@
-// PublicLayout.jsx
-import { useEffect } from 'react';
-import { Header } from './Header';  // Asegúrate de que solo se importa aquí
-import { Navigate, Outlet, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react'
+import { Header } from '../public/Header'
+import { Navigate, Outlet, useNavigate } from 'react-router-dom'
 import useAuth from '../../../hooks/useAuth';
 import Cookies from 'js-cookie';
-import { Footer } from './Footer';
 
-export const PublicLayout = () => {
+export const PrivateLayout = () => {
   const { auth, loading } = useAuth();
   const navigate = useNavigate();
 
@@ -20,12 +18,10 @@ export const PublicLayout = () => {
   }, [auth, loading, navigate]);
 
   if (loading) return <div>Loading...</div>; // Muestra un loading mientras se verifica la autenticación
-
   return (
     <>
-      <Header /> {/* Asegúrate de que solo esté aquí, no dentro de <Outlet /> */}
-      {!auth._id ? <Outlet /> : <Navigate to="/auth" />}
-      <Footer></Footer>
+        <Header /> {/* Asegúrate de que solo esté aquí, no dentro de <Outlet /> */}
+      {auth._id ? <Outlet /> : <Navigate to="/" />}
     </>
-  );
-};
+  )
+}
