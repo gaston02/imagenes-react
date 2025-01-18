@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 
 const ImageModal = ({ imageSrc, onClose }) => {
-  console.log(imageSrc)
   return (
     <div className="modal fade" id="modal-imagen" data-bs-backdrop="true">
       <div className="modal-dialog modal-lg modal-dialog-centered">

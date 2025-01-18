@@ -6,6 +6,7 @@ import { Register } from "../components/user/Register";
 import { Perfil } from "../components/user/Perfil";
 import RandomUserGallery from "../components/GalleryPage";
 import { PrivateLayout } from "../components/layout/private/PrivateLayout";
+import { Logout } from "../components/logout";
 
 export const Routing = () => {
   return (
@@ -22,6 +23,7 @@ export const Routing = () => {
           <Route path="/auth" element={<PrivateLayout />}>
             <Route index element={<RandomUserGallery />} />
             <Route path="perfil" element={<Perfil />} />
+            <Route path="logout" element={<Logout />} />
           </Route>
         </Routes>
       </AuthProvider>

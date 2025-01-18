@@ -24,7 +24,6 @@
     padding: 10px !important;
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.28) !important; /* Sombra sutil */
     display: inline-block !important; /* Ajusta la tarjeta al tamaño del contenido */
-    width: auto !important; /* Permite que la tarjeta se ajuste a la imagen */
     border-radius: 8px !important; /* Opcional: para un diseño más estilizado */
     border: 1px solid rgba(0, 0, 0, 0.3) !important; /* Borde ligeramente más oscuro */
 }
@@ -459,6 +458,8 @@
 }
 
 .register-card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7) !important;
+    border-radius: 8px !important;
     width: 100%;
     max-width: 900px;
     border-radius: 8px;
@@ -494,12 +495,12 @@
 }
 
 .btn-register {
-    background-color: var(--marca);
+    background-color: var(--marca) !important;
     border: none;
     transition: background-color 0.3s;
 }
 
 .btn-register:hover {
-    background-color: var(--marca-x);
+    background-color: var(--marca-x) !important;
 }
   

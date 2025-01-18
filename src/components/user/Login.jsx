@@ -25,15 +25,12 @@ export const Login = () => {
     setError(""); // Limpiar errores previos
 
     try {
-      console.log("entre al try")
       const response = await axios.post(Global.URL + "login", {
         email,
         password,
       });
-      console.log("sali del axios: " + email);
       const { token } = response.data.data;
       const user = response.data.data;
-      console.log("user: " + JSON.stringify(user));
       if(response.status === 200){
         // Guarda las cookies con las credenciales
         Cookies.set("token", token);

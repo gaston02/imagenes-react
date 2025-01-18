@@ -2,8 +2,7 @@ import { Link } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth"; // Importa el hook
 
 export const Nav = () => {
-  const { auth, logout } = useAuth(); // Usamos el hook para obtener auth y logout
-  console.log("autenticado: ", auth);
+  const { auth } = useAuth(); // Usamos el hook para obtener auth y logout
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark sticky-top">
@@ -40,32 +39,27 @@ export const Nav = () => {
                 </Link>
                 <Link
                   className="nav-link text-white fw-bold me-3"
-                  to="/registro"
+                  to="registro"
                 >
                   Registro
                 </Link>
               </>
             ) : (
               // Si hay un ID de usuario (es decir, el usuario está logueado), mostramos Logout
-              <Link className="nav-link text-white fw-bold me-3" onClick={logout}>
-                Logout
-              </Link>
+              <>
+                <li className="nav-item mb-2 mb-lg-0">
+                  <Link
+                    className="nav-link text-white fw-bold me-3"
+                    to="/perfil"
+                  >
+                    Perfil
+                  </Link>
+                </li>
+                <Link className="nav-link text-white fw-bold me-3" to="logout">
+                  Logout
+                </Link>
+              </>
             )}
-            <li className="nav-item mb-2 mb-lg-0">
-              <Link className="nav-link text-white fw-bold me-3" to="#imagenes">
-                Imagenes
-              </Link>
-            </li>
-            <li className="nav-item mb-2 mb-lg-0">
-              <Link className="nav-link text-white fw-bold me-3" to="#hero">
-                Galerias
-              </Link>
-            </li>
-            <li className="nav-item mb-2 mb-lg-0">
-              <Link className="nav-link text-white fw-bold me-3" to="/perfil">
-                Perfil
-              </Link>
-            </li>
           </ul>
         </div>
       </div>
