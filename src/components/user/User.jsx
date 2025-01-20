@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
-const User = ({ userName, onNext, onPrev }) => {
+const User = ({ userName, onNext, onPrev, id }) => {
   return (
     <>
       <h1 className="text-center my-2">Imagenes</h1>
@@ -10,12 +11,12 @@ const User = ({ userName, onNext, onPrev }) => {
           onClick={onPrev}
           style={{ cursor: "pointer" }} // Añadimos estilo para indicar que es clickeable
         ></span>
-        <a
-          href="perfil.html"
+        <Link
+          to={`/perfil/${id}`}
           className="btn btn-success fs-5 fw-bold py-2 mx-2"
         >
           @{userName}
-        </a>
+        </Link>
         <span
           className="carousel-deco-icon next"
           onClick={onNext}
@@ -30,6 +31,7 @@ User.propTypes = {
   userName: PropTypes.string.isRequired,
   onNext: PropTypes.func.isRequired,
   onPrev: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default User;

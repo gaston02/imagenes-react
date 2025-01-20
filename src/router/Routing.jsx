@@ -17,12 +17,12 @@ export const Routing = () => {
             <Route index element={<RandomUserGallery />} />
             <Route path="login" element={<Login />} />
             <Route path="registro" element={<Register />} />
-            <Route path="perfil" element={<Perfil />} />
+            <Route path="perfil/:id" element={<Perfil />} />
           </Route>
 
           <Route path="/auth" element={<PrivateLayout />}>
             <Route index element={<RandomUserGallery />} />
-            <Route path="perfil" element={<Perfil />} />
+            <Route path="perfil/:id" element={<Perfil />} />
             <Route path="logout" element={<Logout />} />
           </Route>
         </Routes>

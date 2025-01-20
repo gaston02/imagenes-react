@@ -10,14 +10,13 @@ export const PrivateLayout = () => {
 
   useEffect(() => {
     if (!loading && !auth) {
-      // Si el usuario no está autenticado y no está en el proceso de carga, limpia las cookies y redirige
-      Cookies.remove('token');  // Elimina la cookie del token
-      Cookies.remove('user');   // Elimina la cookie del usuario
+      Cookies.remove('token');
+      Cookies.remove('user');
       navigate('/');
     }
   }, [auth, loading]);
 
-  if (loading) return <div>Loading...</div>; // Muestra un loading mientras se verifica la autenticación
+  if (loading) return <div>Loading...</div>;
   return (
     <>
         <Header /> {/* Asegúrate de que solo esté aquí, no dentro de <Outlet /> */}

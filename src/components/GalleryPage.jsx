@@ -38,6 +38,7 @@ const RandomUserGallery = () => {
         userName={userData.nameUser}
         onNext={axiosRandomUser}
         onPrev={axiosRandomUser} // Usamos la misma función para cambiar de usuario
+        id={userData._id}
       />
       <Image images={userData.images || []} userName={userData.nameUser} />
       <Carousel
