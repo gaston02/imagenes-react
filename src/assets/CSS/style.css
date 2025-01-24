@@ -14,6 +14,10 @@
     background-color: var(--marca) !important;
 }
 
+.btn{
+    line-height: 1.3 !important;
+}
+
 .btn-marca{
     background-color: var(--marca) !important;
 }
@@ -405,7 +409,7 @@
     padding: 16px;
 }
 
-.bg-primary{background: var(--marca) !important;}
+.bg-side{background: var(--marca) !important;}
 
 .btn-info{
     background-color: var(--marca)!important;

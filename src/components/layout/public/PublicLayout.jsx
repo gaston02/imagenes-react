@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Header } from "./Header"; // Asegúrate de que solo se importa aquí
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import { Navigate, Outlet, useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import Cookies from "js-cookie";
 import { Footer } from "./Footer";
@@ -8,6 +8,7 @@ import { Footer } from "./Footer";
 export const PublicLayout = () => {
   const { auth, loading } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation(); // Obtener la ubicación actual
 
   useEffect(() => {
     if (loading && auth) {
@@ -20,12 +21,15 @@ export const PublicLayout = () => {
 
   if (loading) return <div>Loading...</div>; // Muestra un loading mientras se verifica la autenticación
 
+  // Verificar si la ruta actual es la de perfil
+  const isProfileRoute = location.pathname.includes("/perfil/");
+
   return (
     <>
-      <Header />{" "}
-      {/* Asegúrate de que solo esté aquí, no dentro de <Outlet /> */}
+      {/* Renderizar el Header solo si no estamos en la ruta de perfil */}
+      {!isProfileRoute && <Header />}
       {!auth._id ? <Outlet /> : <Navigate to="/auth" />}
-      <Footer></Footer>
+      <Footer />
     </>
   );
 };
