@@ -2,9 +2,11 @@ import PropTypes from "prop-types";
 import { Upload } from "../util/Global";
 import ImageModal from "./ImageModal";
 import { useState } from "react";
+import useAuth from "../hooks/useAuth";
 
 export const Image = ({ images, userName }) => {
   const [imageSrc, setImageSrc] = useState(null);
+  const { auth } = useAuth();
 
   const handleImageClick = (imagePath) => {
     setImageSrc(`${Upload.URL}uploads/${imagePath}`); // Establece la ruta completa
@@ -51,10 +53,17 @@ export const Image = ({ images, userName }) => {
                 <p className="card-text mb-2">
                   {new Date(image.createdAt).toLocaleDateString()}
                 </p>
-                <button className="btn btn-warning btn-md fw-bold text-white mx-2">
-                  Modificar
-                </button>
-                <button className="btn btn-danger btn-md fw-bold mx-2">Eliminar</button>
+                {/* Mostrar botones solo si el usuario está autenticado */}
+                {auth.nameUser && (
+                  <>
+                    <button className="btn btn-warning btn-md fw-bold text-white mx-2">
+                      Modificar
+                    </button>
+                    <button className="btn btn-danger btn-md fw-bold mx-2">
+                      Eliminar
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           </li>

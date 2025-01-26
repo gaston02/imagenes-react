@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Header } from "./Header"; // Asegúrate de que solo se importa aquí
+import { Header } from "./Header";
 import { Navigate, Outlet, useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import Cookies from "js-cookie";
@@ -11,11 +11,11 @@ export const PublicLayout = () => {
   const location = useLocation(); // Obtener la ubicación actual
 
   useEffect(() => {
-    if (loading && auth) {
-      // Si el usuario no está autenticado y no está en el proceso de carga, limpia las cookies y redirige
-      Cookies.remove("token"); // Elimina la cookie del token
-      Cookies.remove("user"); // Elimina la cookie del usuario
-      navigate("/");
+    if (!loading) {
+      if (auth._id) {
+        // Si el usuario está autenticado, redirigir a la página de autenticación
+        navigate("/auth");
+      }
     }
   }, [auth, loading, navigate]);
 
@@ -28,8 +28,11 @@ export const PublicLayout = () => {
     <>
       {/* Renderizar el Header solo si no estamos en la ruta de perfil */}
       {!isProfileRoute && <Header />}
-      {!auth._id ? <Outlet /> : <Navigate to="/auth" />}
+      {/* Permitir el acceso a rutas públicas */}
+      <Outlet />
       <Footer />
     </>
   );
 };
+
+export default PublicLayout;

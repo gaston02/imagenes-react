@@ -123,9 +123,11 @@ export const Perfil = () => {
         <section id="imagenes">
           <h2 className="fw-bold text-center">Imágenes</h2>
           <div className="d-flex justify-content-center mb-3">
-            <button className="fs-4 btn btn-marca btn-lg rounded-circle mx-auto">
-              <i className="icon ion-md-add-circle icon-large text-white"></i>
-            </button>
+            {auth.nameUser && (
+              <button className="fs-4 btn btn-marca btn-lg rounded-circle mx-auto">
+                <i className="icon ion-md-add-circle icon-large text-white"></i>
+              </button>
+            )}
           </div>
           <ImagePerfil images={userData.images} userName={userData.nameUser} />
         </section>
@@ -134,29 +136,33 @@ export const Perfil = () => {
         <section id="galerias" className="mb-3">
           <h1 className="fw-bold mt-5 text-center">Galerías</h1>
           <div className="d-flex justify-content-center">
-            <button
-              className="fs-4 btn btn-marca btn-lg rounded-circle mx-auto mb-3"
-              id="btn-galeria"
-            >
-              <i className="icon ion-md-add-circle icon-large text-white"></i>
-            </button>
+            {auth.nameUser && (
+              <button
+                className="fs-4 btn btn-marca btn-lg rounded-circle mx-auto mb-3"
+                id="btn-galeria"
+              >
+                <i className="icon ion-md-add-circle icon-large text-white"></i>
+              </button>
+            )}
           </div>
           <CarouselPerfil
             galleries={userData.galleries || []}
             userName={userData.nameUser}
             images={userData.images || []} // Pasa las imágenes al Carousel
           />
-          {/* Mostrar botones solo si hay galerías */}
-          {userData.galleries && userData.galleries.length > 0 && (
-            <div className="buttons-container text-center mt-4">
-              <button className="btn btn-warning btn-md fw-bold text-white mx-2">
-                Modificar
-              </button>
-              <button className="btn btn-danger btn-md fw-bold mx-2">
-                Eliminar
-              </button>
-            </div>
-          )}
+          {/* Mostrar botones solo si hay galerías y el usuario está autenticado */}
+          {auth.nameUser &&
+            userData.galleries &&
+            userData.galleries.length > 0 && (
+              <div className="buttons-container text-center mt-4">
+                <button className="btn btn-warning btn-md fw-bold text-white mx-2">
+                  Modificar
+                </button>
+                <button className="btn btn-danger btn-md fw-bold mx-2">
+                  Eliminar
+                </button>
+              </div>
+            )}
         </section>
       </div>
     </>

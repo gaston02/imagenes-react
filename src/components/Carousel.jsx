@@ -59,7 +59,7 @@ const Carousel = ({ galleries, userName }) => {
             {currentImage && (
               <img
                 src={`${Upload.URL}uploads/${currentImage.path}`}
-                className="d-block w-100 img-carrusel img-fluid"
+                className="d-block w-100 img-carrusel img-fluid mb-3"
                 alt={`Imagen de la galería ${currentGallery.name}`}
               />
             )}
