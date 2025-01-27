@@ -49,7 +49,7 @@ export const Image = ({ images, userName }) => {
                 />
               </a>
               <div className="card-body p-2">
-                <p className="card-text mb-1">@{userName}</p>
+                <p className="card-text mb-1">{image.name}</p>
                 <p className="card-text mb-2">
                   {new Date(image.createdAt).toLocaleDateString()}
                 </p>

@@ -12,7 +12,7 @@ const User = ({ userName, onNext, onPrev }) => {
           style={{ cursor: "pointer" }} // Añadimos estilo para indicar que es clickeable
         ></span>
         <Link
-          to={`/perfil/${userName}`}
+          to={`perfil/${userName}`}
           className="btn btn-success fs-5 fw-bold py-2 mx-2"
         >
           @{userName}
