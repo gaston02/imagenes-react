@@ -3,7 +3,7 @@ import { Upload } from "../util/Global";
 import { useState } from "react";
 
 const Carousel = ({ galleries, userName, images }) => {
-  const [currentGalleryIndex] = useState(0);
+  const [currentGalleryIndex, setCurrentGalleryIndex] = useState(0);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const handleNextImage = () => {
@@ -23,7 +23,8 @@ const Carousel = ({ galleries, userName, images }) => {
   if (galleries.length === 0) {
     return (
       <div className="text-center mt-2">
-        <h3>El usuario @{userName} no tiene galerías.</h3>
+        <h3>Parece que el usuario @{userName} aún no ha creado ninguna galería.</h3>
+        <p>¡Invítalo a compartir sus mejores fotos!</p>
       </div>
     );
   }
@@ -35,10 +36,7 @@ const Carousel = ({ galleries, userName, images }) => {
     .map((imageId) => images.find((image) => image._id === imageId))
     .filter((image) => image); // Filtrar imágenes que no se encuentren
 
-  //const currentImage = currentImages[currentImageIndex];
-
-  // Generar los indicadores dinámicamente según la cantidad de imágenes en la galería
-  const indicators = currentImages.map((image, index) => (
+  const indicators = currentImages.map((_, index) => (
     <button
       key={index}
       data-bs-target="#hero"

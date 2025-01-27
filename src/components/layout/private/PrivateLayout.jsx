@@ -1,26 +1,29 @@
-import { useEffect } from 'react'
-import { Header } from '../public/Header'
-import { Navigate, Outlet, useNavigate } from 'react-router-dom'
-import useAuth from '../../../hooks/useAuth';
-import Cookies from 'js-cookie';
+import { useEffect } from "react";
+import { Header } from "../public/Header";
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import useAuth from "../../../hooks/useAuth";
 
 export const PrivateLayout = () => {
   const { auth, loading } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!loading && !auth) {
-      Cookies.remove('token');
-      Cookies.remove('user');
-      navigate('/');
+    if (!loading) {
+      if (!auth?._id) {
+        // Verifica si no hay ID de usuario
+        navigate("/"); // Redirige a la página de inicio
+      }
     }
-  }, [auth, loading]);
+  }, [auth, loading, navigate]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div>Loading...</div>; // Muestra un loading mientras se verifica la autenticación
+
   return (
     <>
-        <Header /> {/* Asegúrate de que solo esté aquí, no dentro de <Outlet /> */}
-      {auth._id ? <Outlet /> : <Navigate to="/" />}
+      <Header />
+      <Outlet />
     </>
-  )
-}
+  );
+};
+
+export default PrivateLayout;

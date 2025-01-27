@@ -16,12 +16,27 @@ export const Perfil = () => {
     const axiosUserData = async () => {
       try {
         let response;
+        // Función para obtener el valor de una cookie por su nombre
+        const getCookie = (token) => {
+          const value = `; ${document.cookie}`; // Añadimos un punto y coma para facilitar la búsqueda
+          const parts = value.split(`; ${token}=`); // Separamos las cookies por el nombre de la cookie
+          if (parts.length === 2) return parts.pop().split(";").shift(); // Retornamos el valor
+        };
+
+        const token = getCookie('token'); // Obtiene el token de la cookie
+
         if (!auth.nameUser) {
           response = await axios.get(
             `${Global.URL}publico/usuario/${nameUser}`
           );
         } else {
-          response = await axios.get(`${Global.URL}usuario/${nameUser}`);
+          response = await axios.get(`${Global.URL}usuario/${nameUser}`, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`, // Usando el token como un Bearer token
+            },
+            withCredentials: true, // Esto permite el envío de cookies
+          });
         }
 
         if (response.status === 200) {
@@ -102,7 +117,7 @@ export const Perfil = () => {
             <div className="col-lg-4">
               <h1 className="fw-bold mt-3 text-informativo">
                 {isOwnProfile
-                  ? "Bienvenido: " + userData.userName
+                  ? "Bienvenido: " + userData.nameUser
                   : `Perfil de ${userData.nameUser}`}
               </h1>
             </div>

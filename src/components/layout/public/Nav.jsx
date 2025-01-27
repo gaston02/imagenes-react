@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import useAuth from "../../../hooks/useAuth"; // Importa el hook
+import useAuth from "../../../hooks/useAuth";
 
 export const Nav = () => {
-  const { auth } = useAuth(); // Usamos el hook para obtener auth y logout
+  const { auth } = useAuth(); // Usamos el hook para obtener auth
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark sticky-top">
@@ -22,36 +22,26 @@ export const Nav = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div
-          className="collapse navbar-collapse justify-content-end"
-          id="navbarSupportedContent"
-        >
+        <div className="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
           <ul className="navbar-nav mb-2 mb-lg-0">
             <li className="nav-item mb-2 mb-lg-0">
               <Link className="nav-link text-white fw-bold me-3" to="/">
                 Inicio
               </Link>
             </li>
-            {!auth?._id ? ( // Usamos el operador de encadenamiento opcional
+            {!auth?._id ? (
               <>
                 <Link className="nav-link text-white fw-bold me-3" to="login">
                   Login
                 </Link>
-                <Link
-                  className="nav-link text-white fw-bold me-3"
-                  to="registro"
-                >
+                <Link className="nav-link text-white fw-bold me-3" to="registro">
                   Registro
                 </Link>
               </>
             ) : (
-              // Si hay un ID de usuario (es decir, el usuario está logueado), mostramos Logout
               <>
                 <li className="nav-item mb-2 mb-lg-0">
-                  <Link
-                    className="nav-link text-white fw-bold me-3"
-                    to="/perfil"
-                  >
+                  <Link className="nav-link text-white fw-bold me-3" to={`perfil/${auth.nameUser}`}>
                     Perfil
                   </Link>
                 </li>
@@ -66,3 +56,5 @@ export const Nav = () => {
     </nav>
   );
 };
+
+export default Nav;
