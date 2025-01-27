@@ -9,14 +9,18 @@ export const Image = ({ images, userName }) => {
   const { auth } = useAuth();
 
   const handleImageClick = (imagePath) => {
-    setImageSrc(`${Upload.URL}uploads/${imagePath}`);
+    setImageSrc(`${Upload.URL}uploads/${imagePath}`); // Establece la ruta completa
     const modal = new window.bootstrap.Modal(
       document.getElementById("modal-imagen")
     );
     modal.show();
   };
 
-  if (!images || images.length === 0) {
+  const handleCloseModal = () => {
+    setImageSrc(null);
+  };
+
+  if (images.length === 0) {
     return (
       <div className="text-center mt-2">
         <h3>El usuario @{userName} no tiene imágenes.</h3>
@@ -49,6 +53,7 @@ export const Image = ({ images, userName }) => {
                 <p className="card-text mb-2">
                   {new Date(image.createdAt).toLocaleDateString()}
                 </p>
+                {/* Mostrar botones solo si el usuario está autenticado */}
                 {auth.nameUser && (
                   <>
                     <button className="btn btn-warning btn-md fw-bold text-white mx-2">
@@ -64,7 +69,7 @@ export const Image = ({ images, userName }) => {
           </li>
         ))}
       </ul>
-      <ImageModal imageSrc={imageSrc} onClose={() => setImageSrc(null)} />
+      <ImageModal imageSrc={imageSrc} onClose={handleCloseModal} />
     </main>
   );
 };
@@ -78,3 +83,5 @@ Image.propTypes = {
   ).isRequired,
   userName: PropTypes.string.isRequired,
 };
+
+export default Image;

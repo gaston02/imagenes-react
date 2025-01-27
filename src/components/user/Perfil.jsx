@@ -48,6 +48,7 @@ export const Perfil = () => {
     };
     axiosUserData(); // Llamar a la función para obtener los datos del usuario
   }, [nameUser, auth, navigate]);
+  console.log("user data: " + JSON.stringify(userData));
 
   // Verificar si userData está definido antes de acceder a sus propiedades
   if (!userData) {
@@ -183,5 +184,3 @@ export const Perfil = () => {
     </>
   );
 };
-
-export default Perfil;
