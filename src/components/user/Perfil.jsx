@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import useAuth from "../../hooks/useAuth";
 import { Global, Upload } from "../../util/Global";
@@ -23,7 +23,7 @@ export const Perfil = () => {
           if (parts.length === 2) return parts.pop().split(";").shift(); // Retornamos el valor
         };
 
-        const token = getCookie('token'); // Obtiene el token de la cookie
+        const token = getCookie("token"); // Obtiene el token de la cookie
 
         if (!auth.nameUser) {
           response = await axios.get(
@@ -48,6 +48,10 @@ export const Perfil = () => {
     };
     axiosUserData(); // Llamar a la función para obtener los datos del usuario
   }, [nameUser, auth, navigate]);
+
+  const handleLogout = () => {
+    navigate("/auth/logout"); // Navegar a la ruta de logout
+  };
 
   // Verificar si userData está definido antes de acceder a sus propiedades
   if (!userData) {
@@ -81,18 +85,26 @@ export const Perfil = () => {
         <a href="#galerias" className="text-light fw-bold d-block mb-3">
           <i className="icon ion-md-albums mx-3 lead"></i>Galerías
         </a>
-        <a href="/" className="text-light fw-bold d-block mb-3">
-          <i className="icon ion-md-home mx-3 lead"></i>Inicio
-        </a>
+        {auth.nameUser ? (
+          <>
+            <Link to="/auth" className="text-light fw-bold d-block mb-3">
+              <i className="icon ion-md-home mx-3 lead"></i>Inicio
+            </Link>
+          </>
+        ) : (
+          <a href="/" className="text-light fw-bold d-block mb-3">
+            <i className="icon ion-md-home mx-3 lead"></i>Inicio
+          </a>
+        )}
+        {/* Mostrar el enlace de cerrar sesión solo si el usuario está autenticado */}
         {/* Mostrar el enlace de cerrar sesión solo si el usuario está autenticado */}
         {auth.nameUser && (
-          <a
-            href="#"
-            id="cerrar-sesion"
-            className="text-light fw-bold d-block mb-3"
+          <button
+            onClick={handleLogout}
+            className="btn-logout text-light fw-bold d-block mb-3"
           >
             <i className="icon ion-md-exit mx-3 lead"></i>Cerrar sesión
-          </a>
+          </button>
         )}
       </div>
 
@@ -138,11 +150,12 @@ export const Perfil = () => {
         <section id="imagenes">
           <h2 className="fw-bold text-center">Imágenes</h2>
           <div className="d-flex justify-content-center mb-3">
-            {auth.nameUser && (
-              <button className="fs-4 btn btn-marca btn-lg rounded-circle mx-auto">
-                <i className="icon ion-md-add-circle icon-large text-white"></i>
-              </button>
-            )}
+            {auth.nameUser &&
+              isOwnProfile && ( // Verifica si el usuario está autenticado y si es su propio perfil
+                <button className="fs-4 btn btn-marca btn-lg rounded-circle mx-auto">
+                  <i className="icon ion-md-add-circle icon-large text-white"></i>
+                </button>
+              )}
           </div>
           <ImagePerfil images={userData.images} userName={userData.nameUser} />
         </section>
@@ -151,7 +164,7 @@ export const Perfil = () => {
         <section id="galerias" className="mb-3">
           <h1 className="fw-bold mt-5 text-center">Galerías</h1>
           <div className="d-flex justify-content-center">
-            {auth.nameUser && (
+            {auth.nameUser && isOwnProfile && (
               <button
                 className="fs-4 btn btn-marca btn-lg rounded-circle mx-auto mb-3"
                 id="btn-galeria"
@@ -167,6 +180,7 @@ export const Perfil = () => {
           />
           {/* Mostrar botones solo si hay galerías y el usuario está autenticado */}
           {auth.nameUser &&
+            isOwnProfile &&
             userData.galleries &&
             userData.galleries.length > 0 && (
               <div className="buttons-container text-center mt-4">

@@ -18,9 +18,13 @@ export const PrivateLayout = () => {
 
   if (loading) return <div>Loading...</div>; // Muestra un loading mientras se verifica la autenticación
 
+  const isProfileRoute = location.pathname.includes("/perfil/");
+
   return (
     <>
-      <Header />
+      {/* Renderizar el Header solo si no estamos en la ruta de perfil */}
+      {!isProfileRoute && <Header />}
+      {/* Permitir el acceso a rutas públicas */}
       <Outlet />
     </>
   );

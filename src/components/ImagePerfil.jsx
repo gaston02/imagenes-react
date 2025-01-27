@@ -20,6 +20,8 @@ export const Image = ({ images, userName }) => {
     setImageSrc(null);
   };
 
+  const isOwnProfile = auth?.nameUser === userName; // Verificar si es el perfil del usuario autenticado
+
   if (images.length === 0) {
     return (
       <div className="text-center mt-2">
@@ -54,16 +56,17 @@ export const Image = ({ images, userName }) => {
                   {new Date(image.createdAt).toLocaleDateString()}
                 </p>
                 {/* Mostrar botones solo si el usuario está autenticado */}
-                {auth.nameUser && (
-                  <>
-                    <button className="btn btn-warning btn-md fw-bold text-white mx-2">
-                      Modificar
-                    </button>
-                    <button className="btn btn-danger btn-md fw-bold mx-2">
-                      Eliminar
-                    </button>
-                  </>
-                )}
+                {auth.nameUser &&
+                  isOwnProfile && ( // Verifica si el usuario está autenticado y si es su propio perfil
+                    <>
+                      <button className="btn btn-warning btn-md fw-bold text-white mx-2">
+                        Modificar
+                      </button>
+                      <button className="btn btn-danger btn-md fw-bold mx-2">
+                        Eliminar
+                      </button>
+                    </>
+                  )}
               </div>
             </div>
           </li>

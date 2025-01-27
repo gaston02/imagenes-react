@@ -18,15 +18,17 @@ export const Logout = () => {
             withCredentials: true, // Si tu backend usa cookies
           }
         );
+
+        // Limpiar el almacenamiento local y el estado de autenticación
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+        setAuth({}); // Asegúrate de que esto esté configurando el estado correctamente
+
+        // Redirigir a la página de inicio
+        navigate("/");
       } catch (error) {
         console.error("Error al cerrar sesión:", error);
       }
-
-      localStorage.removeItem("user");
-      localStorage.removeItem("token");
-      setAuth({});
-
-      navigate("/");
     };
 
     logout();

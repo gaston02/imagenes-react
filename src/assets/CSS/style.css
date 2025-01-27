@@ -24,6 +24,21 @@
 
 .btn-success{background-color: var(--btn-success)!important;}
 
+.btn-logout {
+    border: none; /* Quita el borde */
+    background-color: transparent; /* Hace el fondo transparente */
+    color: inherit; /* Hereda el color del texto del elemento padre */
+    padding: 0; /* Elimina el padding para que no tenga espacio extra */
+    margin-left: 34px;
+    cursor: pointer; /* Cambia el cursor a puntero al pasar sobre el botón */
+    text-decoration: none; /* Elimina el subrayado si es un enlace */
+    font-size: 20px;
+  }
+  
+.btn-logout:focus {
+    outline: none; /* Quita el contorno al hacer foco */
+}
+
 .card {
     padding: 10px !important;
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.28) !important; /* Sombra sutil */
