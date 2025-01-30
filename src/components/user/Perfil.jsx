@@ -5,12 +5,14 @@ import useAuth from "../../hooks/useAuth";
 import { Global, Upload } from "../../util/Global";
 import ImagePerfil from "../ImagePerfil";
 import CarouselPerfil from "../CarouselPerfil";
+import ImageRegistration from "../ImageRegister";
 
 export const Perfil = () => {
-  const { nameUser } = useParams(); // Obtener el nombre de usuario desde la URL
-  const { auth } = useAuth(); // Hook para obtener los datos del usuario autenticado
-  const [userData, setUserData] = useState(null); // Estado para los datos del usuario
+  const { nameUser } = useParams();
+  const { auth } = useAuth();
+  const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
+  const [showImageRegistration, setShowImageRegistration] = useState(false); // Estado para controlar la visibilidad del formulario
 
   useEffect(() => {
     const axiosUserData = async () => {
@@ -43,14 +45,14 @@ export const Perfil = () => {
           setUserData(response.data.data); // Guardar los datos del usuario en el estado
         }
       } catch {
-        navigate("/404"); // Redirigir a la página 404 si ocurre un error
+        navigate("/404");
       }
     };
-    axiosUserData(); // Llamar a la función para obtener los datos del usuario
+    axiosUserData();
   }, [nameUser, auth, navigate]);
 
   const handleLogout = () => {
-    navigate("/auth/logout"); // Navegar a la ruta de logout
+    navigate("/auth/logout");
   };
 
   // Verificar si userData está definido antes de acceder a sus propiedades
@@ -132,6 +134,7 @@ export const Perfil = () => {
                   ? "Bienvenido: " + userData.nameUser
                   : `Perfil de ${userData.nameUser}`}
               </h1>
+              <p className="text-muted mt-5">{userData.userInfo}</p>
             </div>
             <div className="col-lg-8">
               {/* Mostrar la imagen de perfil solo si existe */}
@@ -147,18 +150,24 @@ export const Perfil = () => {
         </section>
 
         {/* Sección de imágenes */}
-        <section id="imagenes">
-          <h2 className="fw-bold text-center">Imágenes</h2>
-          <div className="d-flex justify-content-center mb-3">
-            {auth.nameUser &&
-              isOwnProfile && ( // Verifica si el usuario está autenticado y si es su propio perfil
-                <button className="fs-4 btn btn-marca btn-lg rounded-circle mx-auto">
-                  <i className="icon ion-md-add-circle icon-large text-white"></i>
-                </button>
-              )}
-          </div>
+      <section id="imagenes">
+        <h2 className="fw-bold text-center">Imágenes</h2>
+        <div className="d-flex justify-content-center mb-3">
+          {auth.nameUser && isOwnProfile && ( // Verifica si el usuario está autenticado y si es su propio perfil
+            <button
+              className="fs-4 btn btn-marca btn-lg rounded-circle mx-auto"
+              onClick={toggleImageRegistration} // Manejar el clic para mostrar/ocultar el formulario
+            >
+              <i className="icon ion-md-add-circle icon-large text-white"></i>
+            </button>
+          )}
+        </div>
+        {showImageRegistration ? ( // Renderizar el formulario si showImageRegistration es true
+          <ImageRegistration />
+        ) : (
           <ImagePerfil images={userData.images} userName={userData.nameUser} />
-        </section>
+        )}
+      </section>
 
         {/* Sección de galerías */}
         <section id="galerias" className="mb-3">

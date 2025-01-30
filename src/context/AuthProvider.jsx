@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext } from "react";
-import Cookies from "js-cookie"; // Asegúrate de instalar js-cookie
+import Cookies from "js-cookie";
 
 const AuthContext = createContext();
 
@@ -7,7 +7,6 @@ export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({});
   const [loading, setLoading] = useState(true);
 
-  // Se ejecuta la primera vez que se monta el provider
   useEffect(() => {
     checkAuth();
   }, []);
@@ -23,10 +22,9 @@ export const AuthProvider = ({ children }) => {
       const userObj = JSON.parse(user);
       setAuth({ ...userObj, token }); // Establece la información del usuario y el token en el estado
     } else {
-      setAuth({}); // Si no hay usuario o token, establece auth como vacío
+      setAuth({});
     }
 
-    // Cambiar el estado de loading a false una vez que se verifica el auth
     setLoading(false);
   };
 
