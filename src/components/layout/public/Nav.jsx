@@ -51,9 +51,6 @@ export const Nav = () => {
                     Perfil
                   </Link>
                 </li>
-                <Link className="nav-link text-white fw-bold me-3" to="registro">
-                  Registro
-                </Link>
                 <a className="nav-link text-white fw-bold me-3" href="#imagenes">
                   Imagenes
                 </a>

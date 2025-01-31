@@ -55,6 +55,10 @@ export const Perfil = () => {
     navigate("/auth/logout");
   };
 
+  const toggleImageRegistration = () => {
+    setShowImageRegistration((prev) => !prev); // Alternar la visibilidad
+  };
+
   // Verificar si userData está definido antes de acceder a sus propiedades
   if (!userData) {
     return <div>Cargando perfil...</div>; // Mostrar un mensaje de carga mientras se obtienen los datos
@@ -150,6 +154,7 @@ export const Perfil = () => {
         </section>
 
         {/* Sección de imágenes */}
+      {/* Sección de imágenes */}
       <section id="imagenes">
         <h2 className="fw-bold text-center">Imágenes</h2>
         <div className="d-flex justify-content-center mb-3">
@@ -163,7 +168,7 @@ export const Perfil = () => {
           )}
         </div>
         {showImageRegistration ? ( // Renderizar el formulario si showImageRegistration es true
-          <ImageRegistration />
+          <ImageRegistration galleries={userData.galleries || []} />
         ) : (
           <ImagePerfil images={userData.images} userName={userData.nameUser} />
         )}

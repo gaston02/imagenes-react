@@ -58,7 +58,7 @@ export const Register = () => {
                   type="text"
                   className="form-control"
                   id="nameUser"
-                  name="nameUser" // Asegúrate de que el nombre coincida
+                  name="nameUser"
                   placeholder="Nombre de usuario"
                   onChange={changed}
                   required
@@ -72,7 +72,7 @@ export const Register = () => {
                   type="email"
                   className="form-control"
                   id="email"
-                  name="email" // Asegúrate de que el nombre coincida
+                  name="email"
                   placeholder="Email"
                   onChange={changed}
                   required
@@ -86,7 +86,7 @@ export const Register = () => {
                   type="password"
                   className="form-control"
                   id="password"
-                  name="password" // Asegúrate de que el nombre coincida
+                  name="password"
                   placeholder="Contraseña"
                   onChange={changed}
                   required
@@ -100,7 +100,7 @@ export const Register = () => {
                   type="file"
                   className="form-control"
                   id="profileImage"
-                  name="profileImage" // Asegúrate de que el nombre coincida
+                  name="profileImage"
                   onChange={changed}
                 />
               </div>
@@ -111,7 +111,7 @@ export const Register = () => {
                 <textarea
                   className="form-control"
                   id="userInfo"
-                  name="userInfo" // Asegúrate de que el nombre coincida
+                  name="userInfo"
                   rows="3"
                   placeholder="Información adicional"
                   onChange={changed}

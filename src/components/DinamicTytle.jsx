@@ -23,7 +23,6 @@ const DynamicTitle = () => {
     }
 
     document.title = title;
-    console.log("title: " + title);
   }, [location, auth?.nameUser, nameUser]);
 
   return null; // Este componente no necesita renderizar nada
