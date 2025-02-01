@@ -19,30 +19,30 @@ export const Perfil = () => {
       try {
         let response;
         // Función para obtener el valor de una cookie por su nombre
-        const getCookie = (token) => {
-          const value = `; ${document.cookie}`; // Añadimos un punto y coma para facilitar la búsqueda
-          const parts = value.split(`; ${token}=`); // Separamos las cookies por el nombre de la cookie
-          if (parts.length === 2) return parts.pop().split(";").shift(); // Retornamos el valor
+        const getCookie = (tokenName) => {
+          const value = `; ${document.cookie}`;
+          const parts = value.split(`; ${tokenName}=`);
+          if (parts.length === 2) return parts.pop().split(";").shift();
         };
 
         const token = getCookie("token"); // Obtiene el token de la cookie
 
-        if (!auth.nameUser) {
-          response = await axios.get(
-            `${Global.URL}publico/usuario/${nameUser}`
-          );
+        // Si no está autenticado o si está autenticado pero el usuario en la URL no corresponde al usuario logueado,
+        // usamos el endpoint público. De lo contrario, usamos el endpoint privado.
+        if (!auth.nameUser || auth.nameUser !== nameUser) {
+          response = await axios.get(`${Global.URL}publico/usuario/${nameUser}`);
         } else {
           response = await axios.get(`${Global.URL}usuario/${nameUser}`, {
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`, // Usando el token como un Bearer token
+              Authorization: `Bearer ${token}`,
             },
-            withCredentials: true, // Esto permite el envío de cookies
+            withCredentials: true,
           });
         }
 
         if (response.status === 200) {
-          setUserData(response.data.data); // Guardar los datos del usuario en el estado
+          setUserData(response.data.data);
         }
       } catch {
         navigate("/404");
@@ -56,15 +56,14 @@ export const Perfil = () => {
   };
 
   const toggleImageRegistration = () => {
-    setShowImageRegistration((prev) => !prev); // Alternar la visibilidad
+    setShowImageRegistration((prev) => !prev);
   };
 
-  // Verificar si userData está definido antes de acceder a sus propiedades
   if (!userData) {
-    return <div>Cargando perfil...</div>; // Mostrar un mensaje de carga mientras se obtienen los datos
+    return <div>Cargando perfil...</div>;
   }
 
-  const isOwnProfile = auth?.nameUser === nameUser; // Verificar si es el perfil del usuario autenticado
+  const isOwnProfile = auth?.nameUser === nameUser;
 
   return (
     <>
@@ -74,10 +73,10 @@ export const Perfil = () => {
         <button
           className="closebtn text-white"
           style={{
-            backgroundColor: "transparent", // Sin fondo
-            border: "none", // Sin borde
-            fontSize: "30px", // Tamaño de la fuente
-            cursor: "pointer", // Cambia el cursor al pasar sobre el botón
+            backgroundColor: "transparent",
+            border: "none",
+            fontSize: "30px",
+            cursor: "pointer",
           }}
           onClick={() =>
             (document.getElementById("mySidenav").style.width = "0")
@@ -102,8 +101,6 @@ export const Perfil = () => {
             <i className="icon ion-md-home mx-3 lead"></i>Inicio
           </a>
         )}
-        {/* Mostrar el enlace de cerrar sesión solo si el usuario está autenticado */}
-        {/* Mostrar el enlace de cerrar sesión solo si el usuario está autenticado */}
         {auth.nameUser && (
           <button
             onClick={handleLogout}
@@ -141,7 +138,6 @@ export const Perfil = () => {
               <p className="text-muted mt-5">{userData.userInfo}</p>
             </div>
             <div className="col-lg-8">
-              {/* Mostrar la imagen de perfil solo si existe */}
               {userData.profileImage && (
                 <img
                   src={`${Upload.URL}uploads/${userData.profileImage}`}
@@ -154,25 +150,24 @@ export const Perfil = () => {
         </section>
 
         {/* Sección de imágenes */}
-      {/* Sección de imágenes */}
-      <section id="imagenes">
-        <h2 className="fw-bold text-center">Imágenes</h2>
-        <div className="d-flex justify-content-center mb-3">
-          {auth.nameUser && isOwnProfile && ( // Verifica si el usuario está autenticado y si es su propio perfil
-            <button
-              className="fs-4 btn btn-marca btn-lg rounded-circle mx-auto"
-              onClick={toggleImageRegistration} // Manejar el clic para mostrar/ocultar el formulario
-            >
-              <i className="icon ion-md-add-circle icon-large text-white"></i>
-            </button>
+        <section id="imagenes">
+          <h2 className="fw-bold text-center">Imágenes</h2>
+          <div className="d-flex justify-content-center mb-3">
+            {auth.nameUser && isOwnProfile && (
+              <button
+                className="fs-4 btn btn-marca btn-lg rounded-circle mx-auto"
+                onClick={toggleImageRegistration}
+              >
+                <i className="icon ion-md-add-circle icon-large text-white"></i>
+              </button>
+            )}
+          </div>
+          {showImageRegistration ? (
+            <ImageRegistration galleries={userData.galleries || []} />
+          ) : (
+            <ImagePerfil images={userData.images} userName={userData.nameUser} />
           )}
-        </div>
-        {showImageRegistration ? ( // Renderizar el formulario si showImageRegistration es true
-          <ImageRegistration galleries={userData.galleries || []} />
-        ) : (
-          <ImagePerfil images={userData.images} userName={userData.nameUser} />
-        )}
-      </section>
+        </section>
 
         {/* Sección de galerías */}
         <section id="galerias" className="mb-3">
@@ -190,9 +185,8 @@ export const Perfil = () => {
           <CarouselPerfil
             galleries={userData.galleries || []}
             userName={userData.nameUser}
-            images={userData.images || []} // Pasa las imágenes al Carousel
+            images={userData.images || []}
           />
-          {/* Mostrar botones solo si hay galerías y el usuario está autenticado */}
           {auth.nameUser &&
             isOwnProfile &&
             userData.galleries &&

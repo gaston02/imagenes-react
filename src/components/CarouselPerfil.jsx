@@ -6,20 +6,6 @@ const Carousel = ({ galleries, userName, images }) => {
   const [currentGalleryIndex] = useState(0);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const handleNextImage = () => {
-    const currentImages = galleries[currentGalleryIndex]?.images || [];
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex < currentImages.length - 1 ? prevIndex + 1 : 0
-    );
-  };
-
-  const handlePrevImage = () => {
-    const currentImages = galleries[currentGalleryIndex]?.images || [];
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex > 0 ? prevIndex - 1 : currentImages.length - 1
-    );
-  };
-
   if (galleries.length === 0) {
     return (
       <div className="text-center mt-2">
@@ -30,12 +16,22 @@ const Carousel = ({ galleries, userName, images }) => {
 
   const currentGallery = galleries[currentGalleryIndex];
 
-  // Obtener las imágenes de la galería actual usando los IDs
+  // Obtenemos las imágenes completas de la galería actual usando los IDs
   const currentImages = currentGallery.images
     .map((imageId) => images.find((image) => image._id === imageId))
-    .filter((image) => image); // Filtrar imágenes que no se encuentren
+    .filter((image) => image); // Filtra aquellas imágenes que no se encontraron
 
-  //const currentImage = currentImages[currentImageIndex];
+  const handleNextImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex < currentImages.length - 1 ? prevIndex + 1 : 0
+    );
+  };
+
+  const handlePrevImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex > 0 ? prevIndex - 1 : currentImages.length - 1
+    );
+  };
 
   // Generar los indicadores dinámicamente según la cantidad de imágenes en la galería
   const indicators = currentImages.map((image, index) => (
@@ -46,6 +42,7 @@ const Carousel = ({ galleries, userName, images }) => {
       className={index === currentImageIndex ? "active" : ""}
       aria-current={index === currentImageIndex ? "true" : "false"}
       aria-label={`Slide ${index + 1}`}
+      onClick={() => setCurrentImageIndex(index)}
     ></button>
   ));
 
@@ -62,9 +59,7 @@ const Carousel = ({ galleries, userName, images }) => {
         <div className="carousel-inner">
           {currentImages.map((image, index) => (
             <div
-              className={`carousel-item ${
-                index === currentImageIndex ? "active" : ""
-              }`}
+              className={`carousel-item ${index === currentImageIndex ? "active" : ""}`}
               key={index}
             >
               <img
