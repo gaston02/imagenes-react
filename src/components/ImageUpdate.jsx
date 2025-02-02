@@ -10,9 +10,6 @@ const ImageUpdate = ({ galleries, imageId }) => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const [selectedGalleryId, setSelectedGalleryId] = useState("");
-  //const id = useParams();
-
-  console.log("idImage: " + imageId);
 
   const handlePrivacyChange = (e) => {
     const isPublic = e.target.value === "1"; // Convertimos correctamente a booleano
@@ -53,10 +50,12 @@ const ImageUpdate = ({ galleries, imageId }) => {
       }
 
       if (selectedGalleryId) {
-        formData.append("galleryId", selectedGalleryId);
+        formData.append("galleryIds", selectedGalleryId);
       }
 
-      const response = await axios.post(
+      console.log("formData: " + JSON.stringify(formData));
+
+      const response = await axios.put(
         `${Global.URL}actualizar/imagen/${imageId}`,
         formData,
         {
@@ -67,6 +66,8 @@ const ImageUpdate = ({ galleries, imageId }) => {
           withCredentials: true,
         }
       );
+
+      console.log("response: " + JSON.stringify(response));
 
       if (response.status === 200) {
         navigate("/");
@@ -105,18 +106,6 @@ const ImageUpdate = ({ galleries, imageId }) => {
                   id="name"
                   name="name"
                   placeholder="image 1"
-                  onChange={changed}
-                />
-              </div>
-              <div className="mb-4">
-                <label htmlFor="image" className="form-label fw-bold">
-                  Imagen
-                </label>
-                <input
-                  type="file"
-                  className="form-control"
-                  id="image"
-                  name="image"
                   onChange={changed}
                 />
               </div>

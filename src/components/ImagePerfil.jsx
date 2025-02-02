@@ -74,7 +74,7 @@ export const Image = ({ images, userName }) => {
                         {/* Send image ID to the handleEditClick */}
                         <button
                           className="btn btn-warning btn-md fw-bold text-white mx-2"
-                          onClick={() => handleEditClick(image.id)} // Pass image ID
+                          onClick={() => handleEditClick(image._id)} // Pass image ID
                         >
                           Modificar
                         </button>
