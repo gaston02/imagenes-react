@@ -1,15 +1,18 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "../hooks/useForm";
 import { useNavigate } from "react-router-dom";
-import { Global } from "../util/Global";
 import axios from "axios";
+import { Global } from "../util/Global";
 import PropTypes from "prop-types";
 
-const ImageRegistration = ({ galleries }) => {
+const ImageUpdate = ({ galleries, imageId }) => {
   const { form, changed } = useForm({});
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const [selectedGalleryId, setSelectedGalleryId] = useState("");
+  //const id = useParams();
+
+  console.log("idImage: " + imageId);
 
   const handlePrivacyChange = (e) => {
     const isPublic = e.target.value === "1"; // Convertimos correctamente a booleano
@@ -26,11 +29,10 @@ const ImageRegistration = ({ galleries }) => {
   const selectedGallery = galleries.find(
     (gallery) => gallery._id === selectedGalleryId
   );
+
   const galleryName = selectedGallery
     ? selectedGallery.name
     : "Seleccione una galería";
-
-  console.log(selectedGalleryId);
 
   const getCookie = (token) => {
     const value = `; ${document.cookie}`; // Añadimos un punto y coma para facilitar la búsqueda
@@ -40,7 +42,7 @@ const ImageRegistration = ({ galleries }) => {
 
   const token = getCookie("token"); // Obtiene el token de la cookie
 
-  const uploadImage = async (e) => {
+  const updateImage = async (e) => {
     e.preventDefault();
     setError(""); // Limpiar errores previos
 
@@ -54,15 +56,19 @@ const ImageRegistration = ({ galleries }) => {
         formData.append("galleryId", selectedGalleryId);
       }
 
-      const response = await axios.post(`${Global.URL}upload/image`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
-      });
+      const response = await axios.post(
+        `${Global.URL}actualizar/imagen/${imageId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        }
+      );
 
-      if (response.status === 201) {
+      if (response.status === 200) {
         navigate("/");
       }
     } catch (err) {
@@ -79,19 +85,19 @@ const ImageRegistration = ({ galleries }) => {
 
   return (
     <div className="row" id="registro-imagen">
-      <h1 className="fw-bold text-center mt-5">Subir Imagen</h1>
+      <h1 className="fw-bold text-center mt-5">Editar Imagen</h1>
       <div className="col-md-6 mx-auto">
         <div className="card my-3 me-5">
           <div className="card-body">
             <form
               id="form-imagen"
-              onSubmit={uploadImage}
+              onSubmit={updateImage}
               encType="multipart/form-data"
             >
               {error && <div className="alert alert-danger">{error}</div>}
               <div className="mb-4">
                 <label htmlFor="name" className="form-label fw-bold">
-                  Nombre *
+                  Nombre
                 </label>
                 <input
                   type="text"
@@ -100,12 +106,11 @@ const ImageRegistration = ({ galleries }) => {
                   name="name"
                   placeholder="image 1"
                   onChange={changed}
-                  required
                 />
               </div>
               <div className="mb-4">
                 <label htmlFor="image" className="form-label fw-bold">
-                  Imagen *
+                  Imagen
                 </label>
                 <input
                   type="file"
@@ -113,19 +118,17 @@ const ImageRegistration = ({ galleries }) => {
                   id="image"
                   name="image"
                   onChange={changed}
-                  required
                 />
               </div>
               <div className="mb-4">
                 <label htmlFor="public" className="form-label fw-bold">
-                  Privacidad *
+                  Privacidad
                 </label>
                 <select
                   id="public"
                   name="public"
                   className="form-control"
                   onChange={handlePrivacyChange}
-                  required
                 >
                   <option value="">Seleccione la privacidad</option>
                   <option value="1">Público</option>
@@ -165,8 +168,9 @@ const ImageRegistration = ({ galleries }) => {
   );
 };
 
-ImageRegistration.propTypes = {
+ImageUpdate.propTypes = {
   galleries: PropTypes.array.isRequired,
+  imageId: PropTypes.string.isRequired,
 };
 
-export default ImageRegistration;
+export default ImageUpdate;
