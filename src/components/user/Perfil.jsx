@@ -30,7 +30,9 @@ export const Perfil = () => {
         // Si no está autenticado o si está autenticado pero el usuario en la URL no corresponde al usuario logueado,
         // usamos el endpoint público. De lo contrario, usamos el endpoint privado.
         if (!auth.nameUser || auth.nameUser !== nameUser) {
-          response = await axios.get(`${Global.URL}publico/usuario/${nameUser}`);
+          response = await axios.get(
+            `${Global.URL}publico/usuario/${nameUser}`
+          );
         } else {
           response = await axios.get(`${Global.URL}usuario/${nameUser}`, {
             headers: {
@@ -165,7 +167,11 @@ export const Perfil = () => {
           {showImageRegistration ? (
             <ImageRegistration galleries={userData.galleries || []} />
           ) : (
-            <ImagePerfil images={userData.images} userName={userData.nameUser} />
+            <ImagePerfil
+              images={userData.images}
+              userName={userData.nameUser}
+              galleriesPerfil ={userData.galleries || []}
+            />
           )}
         </section>
 

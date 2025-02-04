@@ -10,6 +10,7 @@ const ImageRegistration = ({ galleries }) => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const [selectedGalleryId, setSelectedGalleryId] = useState("");
+  console.log("galerias: " + JSON.stringify(galleries));
 
   const handlePrivacyChange = (e) => {
     const isPublic = e.target.value === "1"; // Convertimos correctamente a booleano
@@ -30,7 +31,7 @@ const ImageRegistration = ({ galleries }) => {
     ? selectedGallery.name
     : "Seleccione una galería";
 
-  console.log(selectedGalleryId);
+  console.log("galeria id: " + selectedGalleryId);
 
   const getCookie = (token) => {
     const value = `; ${document.cookie}`; // Añadimos un punto y coma para facilitar la búsqueda
@@ -72,7 +73,7 @@ const ImageRegistration = ({ galleries }) => {
 
   useEffect(() => {
     if (error) {
-      const timer = setTimeout(() => setError(""), 5000); // Limpiar error después de 5 segundos
+      const timer = setTimeout(() => setError(""), 5000);
       return () => clearTimeout(timer);
     }
   }, [error]);
@@ -146,6 +147,7 @@ const ImageRegistration = ({ galleries }) => {
                   <option value="">Seleccione una Galería</option>
                   {galleries.map((gallery) => (
                     <option key={gallery._id} value={gallery._id}>
+                      {console.log(gallery)}
                       {gallery.name}
                     </option>
                   ))}

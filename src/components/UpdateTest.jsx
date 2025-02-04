@@ -1,85 +1,87 @@
-import { useEffect, useState } from "react";
-import { useForm } from "../hooks/useForm";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { Global } from "../util/Global";
+import { useSimpleForm } from "../hooks/useForm";
+import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
-const ImageUpdate = ({ galleries, imageId }) => {
-  const { form, changed } = useForm({});
+const UpdateTest = ({ initialData, galleries }) => {
+  const { form, changed } = useSimpleForm(initialData);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [selectedGalleryId, setSelectedGalleryId] = useState(
+    initialData.galleryId || ""
+  );
   const navigate = useNavigate();
-  const [selectedGalleryId, setSelectedGalleryId] = useState("");
 
   const handlePrivacyChange = (e) => {
-    const isPublic = e.target.value === "1"; // Convertimos correctamente a booleano
-
+    const isPublic = e.target.value === "1";
+    // Actualizamos el campo "public" en el estado del formulario
     changed({
-      target: { name: "public", value: JSON.parse(isPublic) }, // Se asegura que sea booleano
+      target: { name: "public", value: JSON.parse(isPublic) },
     });
   };
 
+  // Función para obtener el valor de una cookie por su nombre
+  const getCookie = (cookieName) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${cookieName}=`);
+    if (parts.length === 2) return parts.pop().split(";").shift();
+  };
+
+  const token = getCookie("token");
+
+  // Maneja el cambio en el select de galerías
   const handleGalleryChange = (e) => {
     setSelectedGalleryId(e.target.value);
   };
 
-  const selectedGallery = galleries.find(
-    (gallery) => gallery._id === selectedGalleryId
-  );
+  console.log("selectedGalleryId: " + selectedGalleryId);
 
-  const galleryName = selectedGallery
-    ? selectedGallery.name
-    : "Seleccione una galería";
+  // Crea un mapa de galerías para acceder al nombre de la galería
+  const galleriesMap = galleries.reduce((map, gallery) => {
+    map[gallery._id] = gallery.name; // Usa el _id de cada galería como clave y su name como valor
+    return map;
+  }, {});
 
-  const getCookie = (token) => {
-    const value = `; ${document.cookie}`; // Añadimos un punto y coma para facilitar la búsqueda
-    const parts = value.split(`; ${token}=`); // Separamos las cookies por el nombre de la cookie
-    if (parts.length === 2) return parts.pop().split(";").shift(); // Retornamos el valor
-  };
+  console.log("mapa de galeria: " + JSON.stringify(galleriesMap));
 
-  const token = getCookie("token"); // Obtiene el token de la cookie
+  // Obtenemos el nombre de la galería seleccionada
+  const galleryName =
+    galleriesMap[selectedGalleryId]?.name || "Seleccione una galería";
 
-  const updateImage = async (e) => {
+  console.log("nombre galeria: " + galleryName);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(""); // Limpiar errores previos
+    setLoading(true);
+    setError("");
 
     try {
-      const formData = new FormData();
-      for (const key in form) {
-        formData.append(key, form[key]);
-      }
-
-      if (selectedGalleryId) {
-        formData.append("galleryIds", selectedGalleryId);
-      }
-
-      console.log("formData: " + JSON.stringify(formData));
-
       const response = await axios.put(
-        `${Global.URL}actualizar/imagen/${imageId}`,
-        formData,
+        `${Global.URL}actualizar/imagen/${initialData._id}`,
+        form,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
           withCredentials: true,
         }
       );
-
-      console.log("response: " + JSON.stringify(response));
-
       if (response.status === 200) {
         navigate("/");
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Error al subir la imagen");
+      setError(err.response?.data?.message || err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     if (error) {
-      const timer = setTimeout(() => setError(""), 5000); // Limpiar error después de 5 segundos
+      const timer = setTimeout(() => setError(""), 5000);
       return () => clearTimeout(timer);
     }
   }, [error]);
@@ -90,11 +92,7 @@ const ImageUpdate = ({ galleries, imageId }) => {
       <div className="col-md-6 mx-auto">
         <div className="card my-3 me-5">
           <div className="card-body">
-            <form
-              id="form-imagen"
-              onSubmit={updateImage}
-              encType="multipart/form-data"
-            >
+            <form id="form-imagen" onSubmit={handleSubmit}>
               {error && <div className="alert alert-danger">{error}</div>}
               <div className="mb-4">
                 <label htmlFor="name" className="form-label fw-bold">
@@ -106,6 +104,7 @@ const ImageUpdate = ({ galleries, imageId }) => {
                   id="name"
                   name="name"
                   placeholder="image 1"
+                  value={form.name || ""}
                   onChange={changed}
                 />
               </div>
@@ -117,6 +116,7 @@ const ImageUpdate = ({ galleries, imageId }) => {
                   id="public"
                   name="public"
                   className="form-control"
+                  value={form.public ? "1" : "2"} // Ahora coincide con las opciones del select
                   onChange={handlePrivacyChange}
                 >
                   <option value="">Seleccione la privacidad</option>
@@ -137,7 +137,7 @@ const ImageUpdate = ({ galleries, imageId }) => {
                 >
                   <option value="">Seleccione una Galería</option>
                   {galleries.map((gallery) => (
-                    <option key={gallery._id} value={gallery._id}>
+                    <option key={gallery._id} value={gallery._id} onChange={handleGalleryChange}>
                       {gallery.name}
                     </option>
                   ))}
@@ -146,8 +146,9 @@ const ImageUpdate = ({ galleries, imageId }) => {
               <button
                 type="submit"
                 className="btn btn-info text-white me-auto d-block px-2 py-2 fw-bold mt-2 mx-auto"
+                disabled={loading}
               >
-                Actualziar Imagen
+                {loading ? "Actualizando..." : "Actualizar Imagen"}
               </button>
             </form>
           </div>
@@ -157,9 +158,9 @@ const ImageUpdate = ({ galleries, imageId }) => {
   );
 };
 
-ImageUpdate.propTypes = {
+UpdateTest.propTypes = {
+  initialData: PropTypes.object,
   galleries: PropTypes.array.isRequired,
-  imageId: PropTypes.string.isRequired,
 };
 
-export default ImageUpdate;
+export default UpdateTest;

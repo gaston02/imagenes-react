@@ -3,13 +3,16 @@ import { Upload } from "../util/Global";
 import ImageModal from "./ImageModal";
 import { useState } from "react";
 import useAuth from "../hooks/useAuth";
-import ImageUpdate from "./ImageUpdate";
+//import ImageUpdate from "./ImageUpdate";
+import UpdateTest from "./UpdateTest";
 
-export const Image = ({ images, userName }) => {
+export const Image = ({ images, userName, galleriesPerfil }) => {
   const [imageSrc, setImageSrc] = useState(null);
   const { auth } = useAuth();
   const [showImageEdit, setShowImageEdit] = useState(false);
   const [idImage, setIdimage] = useState(null); // Store the image ID
+
+  console.log("galerias perfil: " + JSON.stringify(galleriesPerfil));
 
   const handleImageClick = (imagePath) => {
     setImageSrc(`${Upload.URL}uploads/${imagePath}`); // Establece la ruta completa
@@ -24,8 +27,8 @@ export const Image = ({ images, userName }) => {
   };
 
   // Handle the click on "Modify" button and pass the image id
-  const handleEditClick = (imageId) => {
-    setIdimage(imageId); // Set the ID of the image
+  const handleEditClick = (image) => {
+    setIdimage(image); // Set the ID of the image
     setShowImageEdit(true); // Show the edit form
   };
 
@@ -42,7 +45,7 @@ export const Image = ({ images, userName }) => {
   return (
     <>
       {showImageEdit ? (
-        <ImageUpdate galleries={auth.galleries} imageId={idImage} />
+        <UpdateTest  initialData={idImage} galleries={galleriesPerfil} galleryId = {galleriesPerfil._id}  />
       ) : (
         <main className="container-xl py-3" id="imagenes">
           <ul className="row list-unstyled galeria">
@@ -74,7 +77,7 @@ export const Image = ({ images, userName }) => {
                         {/* Send image ID to the handleEditClick */}
                         <button
                           className="btn btn-warning btn-md fw-bold text-white mx-2"
-                          onClick={() => handleEditClick(image._id)} // Pass image ID
+                          onClick={() => handleEditClick(image) } // Pass image ID
                         >
                           Modificar
                         </button>
@@ -103,6 +106,7 @@ Image.propTypes = {
     })
   ).isRequired,
   userName: PropTypes.string.isRequired,
+  galleriesPerfil: PropTypes.array.isRequired,
 };
 
 export default Image;
