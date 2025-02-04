@@ -12,8 +12,6 @@ export const Image = ({ images, userName, galleriesPerfil }) => {
   const [showImageEdit, setShowImageEdit] = useState(false);
   const [idImage, setIdimage] = useState(null); // Store the image ID
 
-  console.log("galerias perfil: " + JSON.stringify(galleriesPerfil));
-
   const handleImageClick = (imagePath) => {
     setImageSrc(`${Upload.URL}uploads/${imagePath}`); // Establece la ruta completa
     const modal = new window.bootstrap.Modal(

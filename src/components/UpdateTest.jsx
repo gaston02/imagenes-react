@@ -9,10 +9,10 @@ const UpdateTest = ({ initialData, galleries }) => {
   const { form, changed } = useSimpleForm(initialData);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [selectedGalleryId, setSelectedGalleryId] = useState(
-    initialData.galleryId || ""
-  );
+  const [selectedGalleryId, setSelectedGalleryId] = useState([]);
   const navigate = useNavigate();
+
+  console.log("galerias: " + JSON.stringify(galleries))
 
   const handlePrivacyChange = (e) => {
     const isPublic = e.target.value === "1";
@@ -137,7 +137,12 @@ const UpdateTest = ({ initialData, galleries }) => {
                 >
                   <option value="">Seleccione una Galería</option>
                   {galleries.map((gallery) => (
-                    <option key={gallery._id} value={gallery._id} onChange={handleGalleryChange}>
+                    <option
+                      key={gallery._id}
+                      value={gallery._id}
+                      onChange={handleGalleryChange}
+                    >
+                      {console.log("arreglo galeria: " + Array.of(gallery._id))}
                       {gallery.name}
                     </option>
                   ))}
