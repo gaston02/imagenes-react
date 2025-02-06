@@ -137,7 +137,7 @@ const UpdateTest = ({ initialData, galleries }) => {
                   id="galleryIds"
                   name="galleryIds"
                   className="form-control"
-                  value={selectedGalleryId}
+                  value={Array.isArray(selectedGalleryId) ? selectedGalleryId[0] : selectedGalleryId}
                   onChange={handleGalleryChange}
                 >
                   <option value="default">Sin Galeria</option>
