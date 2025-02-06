@@ -20,6 +20,14 @@ const UpdateTest = ({ initialData, galleries }) => {
     });
   };
 
+  useEffect(() => {
+    if (initialData.galleries && initialData.galleries.length > 0) {
+      setSelectedGalleryId(initialData.galleries[0]); // Usa el primer ID si es un array
+    } else {
+      setSelectedGalleryId("default"); // Sin galería
+    }
+  }, [initialData]);
+
   // Función para obtener el valor de una cookie por su nombre
   const getCookie = (cookieName) => {
     const value = `; ${document.cookie}`;
@@ -51,8 +59,6 @@ const UpdateTest = ({ initialData, galleries }) => {
     try {
       // Si selectedGalleryId es una cadena vacía, asignamos un arreglo vacío
       const galleryIds = selectedGalleryId === "default" ? [] : [selectedGalleryId];
-
-      console.log("id galeria: " + selectedGalleryId);
 
       const response = await axios.put(
         `${Global.URL}actualizar/imagen/${initialData._id}`,
