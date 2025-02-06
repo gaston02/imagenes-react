@@ -48,7 +48,7 @@ export const ImagePerfil = ({ images, userName, galleriesPerfil }) => {
         <main className="container-xl py-3" id="imagenes">
           <ul className="row list-unstyled galeria">
             {images.map((image, index) => (
-              <li key={image.id} className="col-md-6 col-lg-4 mb-4">
+              <li key={image._id} className="col-md-6 col-lg-4 mb-4">
                 <div className="card mx-3">
                   <a
                     href="#"

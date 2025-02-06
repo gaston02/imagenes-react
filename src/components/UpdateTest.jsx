@@ -34,7 +34,6 @@ const UpdateTest = ({ initialData, galleries }) => {
     setSelectedGalleryId(e.target.value);
   };
 
-
   // Crea un mapa de galerías para acceder al nombre de la galería
   const galleriesMap = galleries.reduce((map, gallery) => {
     map[gallery._id] = gallery.name; // Usa el _id de cada galería como clave y su name como valor
@@ -42,8 +41,7 @@ const UpdateTest = ({ initialData, galleries }) => {
   }, {});
 
   // Obtenemos el nombre de la galería seleccionada
-  const galleryName =
-    galleriesMap[form.galleries] || "Seleccione una galería";
+  const galleryName = galleriesMap[form.galleries] || "Seleccione una galería";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,11 +49,16 @@ const UpdateTest = ({ initialData, galleries }) => {
     setError("");
 
     try {
+      // Si selectedGalleryId es una cadena vacía, asignamos un arreglo vacío
+      const galleryIds = selectedGalleryId === "default" ? [] : [selectedGalleryId];
+
+      console.log("id galeria: " + selectedGalleryId);
+
       const response = await axios.put(
         `${Global.URL}actualizar/imagen/${initialData._id}`,
         {
           ...form,
-          galleryIds: [selectedGalleryId],
+          galleryIds,
         },
         {
           headers: {
@@ -131,7 +134,7 @@ const UpdateTest = ({ initialData, galleries }) => {
                   value={selectedGalleryId}
                   onChange={handleGalleryChange}
                 >
-                  <option value="">Sin Galeria</option>
+                  <option value="default">Sin Galeria</option>
                   {galleries.map((gallery) => (
                     <option key={gallery._id} value={gallery._id}>
                       {gallery.name}
