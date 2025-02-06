@@ -193,19 +193,6 @@ export const Perfil = () => {
             userName={userData.nameUser}
             images={userData.images || []}
           />
-          {auth.nameUser &&
-            isOwnProfile &&
-            userData.galleries &&
-            userData.galleries.length > 0 && (
-              <div className="buttons-container text-center mt-4">
-                <button className="btn btn-warning btn-md fw-bold text-white mx-2">
-                  Modificar
-                </button>
-                <button className="btn btn-danger btn-md fw-bold mx-2">
-                  Eliminar
-                </button>
-              </div>
-            )}
         </section>
       </div>
     </>
