@@ -6,7 +6,7 @@ import useAuth from "../hooks/useAuth";
 //import ImageUpdate from "./ImageUpdate";
 import UpdateTest from "./UpdateTest";
 
-export const Image = ({ images, userName, galleriesPerfil }) => {
+export const ImagePerfil = ({ images, userName, galleriesPerfil }) => {
   const [imageSrc, setImageSrc] = useState(null);
   const { auth } = useAuth();
   const [showImageEdit, setShowImageEdit] = useState(false);
@@ -96,7 +96,7 @@ export const Image = ({ images, userName, galleriesPerfil }) => {
   );
 };
 
-Image.propTypes = {
+ImagePerfil.propTypes = {
   images: PropTypes.arrayOf(
     PropTypes.shape({
       path: PropTypes.string.isRequired,
@@ -107,4 +107,4 @@ Image.propTypes = {
   galleriesPerfil: PropTypes.array.isRequired,
 };
 
-export default Image;
+export default ImagePerfil;

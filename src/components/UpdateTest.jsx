@@ -12,8 +12,6 @@ const UpdateTest = ({ initialData, galleries }) => {
   const [selectedGalleryId, setSelectedGalleryId] = useState([]);
   const navigate = useNavigate();
 
-  console.log("galerias: " + JSON.stringify(galleries))
-
   const handlePrivacyChange = (e) => {
     const isPublic = e.target.value === "1";
     // Actualizamos el campo "public" en el estado del formulario
@@ -36,7 +34,6 @@ const UpdateTest = ({ initialData, galleries }) => {
     setSelectedGalleryId(e.target.value);
   };
 
-  console.log("selectedGalleryId: " + selectedGalleryId);
 
   // Crea un mapa de galerías para acceder al nombre de la galería
   const galleriesMap = galleries.reduce((map, gallery) => {
@@ -44,13 +41,9 @@ const UpdateTest = ({ initialData, galleries }) => {
     return map;
   }, {});
 
-  console.log("mapa de galeria: " + JSON.stringify(galleriesMap));
-
   // Obtenemos el nombre de la galería seleccionada
   const galleryName =
-    galleriesMap[selectedGalleryId]?.name || "Seleccione una galería";
-
-  console.log("nombre galeria: " + galleryName);
+    galleriesMap[form.galleries] || "Seleccione una galería";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -60,7 +53,10 @@ const UpdateTest = ({ initialData, galleries }) => {
     try {
       const response = await axios.put(
         `${Global.URL}actualizar/imagen/${initialData._id}`,
-        form,
+        {
+          ...form,
+          galleryIds: [selectedGalleryId],
+        },
         {
           headers: {
             "Content-Type": "application/json",
@@ -129,20 +125,15 @@ const UpdateTest = ({ initialData, galleries }) => {
                   Incluir en galería
                 </label>
                 <select
-                  id="galleryId"
-                  name="galleryId"
+                  id="galleryIds"
+                  name="galleryIds"
                   className="form-control"
                   value={selectedGalleryId}
                   onChange={handleGalleryChange}
                 >
-                  <option value="">Seleccione una Galería</option>
+                  <option value="">Sin Galeria</option>
                   {galleries.map((gallery) => (
-                    <option
-                      key={gallery._id}
-                      value={gallery._id}
-                      onChange={handleGalleryChange}
-                    >
-                      {console.log("arreglo galeria: " + Array.of(gallery._id))}
+                    <option key={gallery._id} value={gallery._id}>
                       {gallery.name}
                     </option>
                   ))}
