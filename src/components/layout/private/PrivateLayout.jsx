@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Header } from "../public/Header";
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 
 export const PrivateLayout = () => {

@@ -15,8 +15,6 @@ const useDelete = () => {
 
   const token = getCookie("token");
 
-  console.log("Token obtenido:", JSON.stringify(token));
-
   const deleteImage = async (apiUrl, id) => {
     setLoading(true);
     setError("");

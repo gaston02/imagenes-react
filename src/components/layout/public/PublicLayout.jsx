@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import { Header } from "./Header";
-import { Navigate, Outlet, useNavigate, useLocation } from "react-router-dom";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
-import Cookies from "js-cookie";
 import { Footer } from "./Footer";
 
 export const PublicLayout = () => {
