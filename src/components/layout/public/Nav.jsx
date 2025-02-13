@@ -22,7 +22,10 @@ export const Nav = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <div
+          className="collapse navbar-collapse justify-content-end"
+          id="navbarSupportedContent"
+        >
           <ul className="navbar-nav mb-2 mb-lg-0">
             <li className="nav-item mb-2 mb-lg-0">
               <Link className="nav-link text-white fw-bold me-3" to="/">
@@ -34,10 +37,16 @@ export const Nav = () => {
                 <Link className="nav-link text-white fw-bold me-3" to="login">
                   Login
                 </Link>
-                <Link className="nav-link text-white fw-bold me-3" to="registro">
+                <Link
+                  className="nav-link text-white fw-bold me-3"
+                  to="registro"
+                >
                   Registro
                 </Link>
-                <a className="nav-link text-white fw-bold me-3" href="#imagenes">
+                <a
+                  className="nav-link text-white fw-bold me-3"
+                  href="#imagenes"
+                >
                   Imagenes
                 </a>
                 <a className="nav-link text-white fw-bold me-3" href="#hero">
@@ -47,11 +56,17 @@ export const Nav = () => {
             ) : (
               <>
                 <li className="nav-item mb-2 mb-lg-0">
-                  <Link className="nav-link text-white fw-bold me-3" to={`perfil/${auth.nameUser}`}>
+                  <Link
+                    className="nav-link text-white fw-bold me-3"
+                    to={`perfil/${auth.nameUser}`}
+                  >
                     Perfil
                   </Link>
                 </li>
-                <a className="nav-link text-white fw-bold me-3" href="#imagenes">
+                <a
+                  className="nav-link text-white fw-bold me-3"
+                  href="#imagenes"
+                >
                   Imagenes
                 </a>
                 <a className="nav-link text-white fw-bold me-3" href="#hero">

@@ -3,6 +3,7 @@ import useAuth from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Global } from "../util/Global";
+import Cookies from "js-cookie";
 
 export const Logout = () => {
   const { setAuth } = useAuth();
@@ -11,6 +12,7 @@ export const Logout = () => {
   useEffect(() => {
     const logout = async () => {
       try {
+        // Realiza la solicitud de cierre de sesión al backend
         await axios.post(
           `${Global.URL}logout`,
           {},
@@ -21,13 +23,14 @@ export const Logout = () => {
 
         // Limpiar el almacenamiento local y el estado de autenticación
         localStorage.removeItem("user");
-        localStorage.removeItem("token");
-        setAuth({}); // Asegúrate de que esto esté configurando el estado correctamente
+        Cookies.remove("token"); // Asegúrate de eliminar el token de las cookies
+        setAuth({}); // Restablecer el estado de autenticación
 
         // Redirigir a la página de inicio
         navigate("/");
       } catch (error) {
         console.error("Error al cerrar sesión:", error);
+        // Aquí podrías mostrar un mensaje de error al usuario si lo deseas
       }
     };
 
@@ -36,3 +39,5 @@ export const Logout = () => {
 
   return <div>Cerrando sesión...</div>;
 };
+
+export default Logout;

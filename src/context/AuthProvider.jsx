@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext } from "react";
+import { useState, useEffect, createContext, useMemo } from "react";
 import Cookies from "js-cookie";
 
 const AuthContext = createContext();
@@ -13,14 +13,12 @@ export const AuthProvider = ({ children }) => {
 
   // Método para verificar si hay un usuario autenticado
   const checkAuth = () => {
-    // Obtener datos del usuario del localStorage
     const user = localStorage.getItem("user");
-    const token = Cookies.get("token"); // Obtener el token de las cookies
+    const token = Cookies.get("token");
 
-    // Comprobar si hay información del usuario
     if (user && token) {
       const userObj = JSON.parse(user);
-      setAuth({ ...userObj, token }); // Establece la información del usuario y el token en el estado
+      setAuth({ ...userObj, token });
     } else {
       setAuth({});
     }
@@ -28,15 +26,28 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   };
 
+  // Función para iniciar sesión
+  const login = (userData, token) => {
+    localStorage.setItem("user", JSON.stringify(userData));
+    Cookies.set("token", token);
+    setAuth({ ...userData, token });
+  };
+
+  // Función para cerrar sesión
+  const logout = () => {
+    localStorage.removeItem("user");
+    Cookies.remove("token");
+    setAuth({});
+  };
+
+  const value = useMemo(
+    () => ({ auth, setAuth, loading, login, logout }),
+    [auth, loading]
+  );
+
   return (
-    <AuthContext.Provider
-      value={{
-        auth,
-        setAuth,
-        loading,
-      }}
-    >
-      {children}
+    <AuthContext.Provider value={value}>
+      {loading ? <div>Loading...</div> : children}
     </AuthContext.Provider>
   );
 };
