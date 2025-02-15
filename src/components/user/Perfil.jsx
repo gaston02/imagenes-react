@@ -6,6 +6,7 @@ import { Global, Upload } from "../../util/Global";
 import ImagePerfil from "../ImagePerfil";
 import CarouselPerfil from "../CarouselPerfil";
 import ImageRegistration from "../ImageRegister";
+import CarouselRegister from "../CarouselRegister";
 
 export const Perfil = () => {
   const { nameUser } = useParams();
@@ -13,6 +14,7 @@ export const Perfil = () => {
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
   const [showImageRegistration, setShowImageRegistration] = useState(false); // Estado para controlar la visibilidad del formulario
+  const [showGalleryRegistration, setShowGalleryRegistration] = useState(false); // Estado para controlar la visibilidad del formulario de galería
 
   useEffect(() => {
     const axiosUserData = async () => {
@@ -59,6 +61,10 @@ export const Perfil = () => {
 
   const toggleImageRegistration = () => {
     setShowImageRegistration((prev) => !prev);
+  };
+
+  const toggleGalleryRegistration = () => {
+    setShowGalleryRegistration((prev) => !prev);
   };
 
   if (!userData) {
@@ -170,7 +176,7 @@ export const Perfil = () => {
             <ImagePerfil
               images={userData.images}
               userName={userData.nameUser}
-              galleriesPerfil ={userData.galleries || []}
+              galleriesPerfil={userData.galleries || []}
             />
           )}
         </section>
@@ -183,16 +189,21 @@ export const Perfil = () => {
               <button
                 className="fs-4 btn btn-marca btn-lg rounded-circle mx-auto mb-3"
                 id="btn-galeria"
+                onClick={toggleGalleryRegistration} // Cambiar la visibilidad al hacer clic
               >
                 <i className="icon ion-md-add-circle icon-large text-white"></i>
               </button>
             )}
           </div>
-          <CarouselPerfil
-            galleries={userData.galleries || []}
-            userName={userData.nameUser}
-            images={userData.images || []}
-          />
+          {showGalleryRegistration ? (
+            <CarouselRegister images={userData.images || []} /> // Mostrar el formulario de registro de galería
+          ) : (
+            <CarouselPerfil
+              galleries={userData.galleries || []}
+              userName={userData.nameUser}
+              images={userData.images || []}
+            />
+          )}
         </section>
       </div>
     </>
