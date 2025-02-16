@@ -22,6 +22,14 @@ const CarouselRegister = ({ images }) => {
     setSelectedImageIds(selected);
   };
 
+  const handlePrivacyChange = (e) => {
+    const isPublic = e.target.value === "1"; // Convertimos correctamente a booleano
+
+    changed({
+      target: { name: "public", value: JSON.parse(isPublic) }, // Se asegura que sea booleano
+    });
+  };
+
   const uploadGallery = async (e) => {
     e.preventDefault();
     setError(""); // Limpiar errores previos
@@ -32,7 +40,12 @@ const CarouselRegister = ({ images }) => {
     try {
       const body = {
         ...form, // Incluye todas las propiedades del formulario
-        imageIds: selectedImageIds.length > 0 ? selectedImageIds : undefined, // Solo incluir si hay imágenes seleccionadas
+        imageIds:
+          selectedImageIds.length > 0 &&
+          !(selectedImageIds.length === 1 && selectedImageIds[0] === "default")
+            ? selectedImageIds
+            : undefined,
+        // Solo incluir si hay imágenes seleccionadas
       };
 
       console.log("body: " + JSON.stringify(body));
@@ -94,11 +107,28 @@ const CarouselRegister = ({ images }) => {
                   onChange={handleImageChange}
                   multiple
                 >
+                  <option value="default">Galeria sin Imagen</option>
                   {images.map((image) => (
                     <option key={image._id} value={image._id}>
                       {image.name}
                     </option>
                   ))}
+                </select>
+              </div>
+              <div className="mb-4">
+                <label htmlFor="public" className="form-label fw-bold">
+                  Privacidad *
+                </label>
+                <select
+                  id="public"
+                  name="public"
+                  className="form-control"
+                  onChange={handlePrivacyChange}
+                  required
+                >
+                  <option value="">Seleccione la privacidad</option>
+                  <option value="1">Público</option>
+                  <option value="2">Privado</option>
                 </select>
               </div>
               <button
