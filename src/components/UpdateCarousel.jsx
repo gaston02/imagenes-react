@@ -170,7 +170,7 @@ const UpdateCarousel = ({ initialData, images }) => {
             <option value="2">Privado</option>
           </select>
         </div>
-        <button type="submit" className="btn btn-primary" disabled={loading}>
+        <button type="submit" className="btn btn-info text-white">
           {loading ? "Guardando cambios..." : "Guardar Cambios"}
         </button>
       </form>
